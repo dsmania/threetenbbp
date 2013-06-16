@@ -75,7 +75,7 @@ public final class JapaneseChronology extends Chronology implements Serializable
         (LocalGregorianCalendar) CalendarSystem.forName("japanese");
 
     // Locale for creating a JapaneseImpericalCalendar.
-    static final Locale LOCALE = Locale.forLanguageTag("ja-JP-u-ca-japanese");
+    static final Locale LOCALE = Locale.JAPANESE; // BBP: Locale.forLanguageTag("ja-JP-u-ca-japanese");
 
     /**
      * Singleton instance for Japanese chronology.

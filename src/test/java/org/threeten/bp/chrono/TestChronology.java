@@ -151,7 +151,9 @@ public class TestChronology {
 
     @Test(dataProvider = "calendarsystemtype")
     public void test_lookupLocale(Chronology chrono, String calendarType) {
-        Locale locale = new Locale.Builder().setLanguage("en").setRegion("CA").setUnicodeLocaleKeyword("ca", calendarType).build();
+        // BBP: Calendar type is not present in JDK 6 Locale
+//        Locale locale = new Locale.Builder().setLanguage("en").setRegion("CA").setUnicodeLocaleKeyword("ca", calendarType).build();
+        Locale locale = new Locale("en", "CA");
         assertEquals(Chronology.ofLocale(locale), chrono);
     }
 

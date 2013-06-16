@@ -223,16 +223,20 @@ public abstract class Chronology implements Comparable<Chronology> {
      */
     public static Chronology ofLocale(Locale locale) {
         Objects_requireNonNull(locale, "locale");
-        String type = locale.getUnicodeLocaleType("ca");
-        if (type == null || "iso".equals(type) || "iso8601".equals(type)) {
-            return IsoChronology.INSTANCE;
-        } else {
-            Chronology chrono = CHRONOS_BY_TYPE.get(type);
-            if (chrono == null) {
-                throw new DateTimeException("Unknown calendar system: " + type);
-            }
-            return chrono;
-        }
+//        String type = locale.getUnicodeLocaleType("ca");
+//        if (type == null || "iso".equals(type) || "iso8601".equals(type)) {
+//            return IsoChronology.INSTANCE;
+//        } else {
+//            Chronology chrono = CHRONOS_BY_TYPE.get(type);
+//            if (chrono == null) {
+//                throw new DateTimeException("Unknown calendar system: " + type);
+//            }
+//            return chrono;
+//        }
+
+        // BBP: In JDK 6 there's no calendar information in the Locale object, thus, honoring the definition, the thai
+        // buddhist chronology is never returned and the japanese one when the locale is japanese
+        return (Locale.JAPANESE.equals(locale)) ? JapaneseChronology.INSTANCE : IsoChronology.INSTANCE;
     }
 
     //-----------------------------------------------------------------------
