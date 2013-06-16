@@ -40,7 +40,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.threeten.bp.DateTimeException;
 import org.threeten.bp.DayOfWeek;
@@ -52,6 +51,8 @@ import org.threeten.bp.Year;
 import org.threeten.bp.ZoneOffset;
 import org.threeten.bp.chrono.IsoChronology;
 import org.threeten.bp.zone.ZoneOffsetTransitionRule.TimeDefinition;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A mutable builder used to create all the rules for a historic time-zone.
@@ -117,9 +118,9 @@ class ZoneRulesBuilder {
             ZoneOffset standardOffset,
             LocalDateTime until,
             TimeDefinition untilDefinition) {
-        Objects.requireNonNull(standardOffset, "standardOffset");
-        Objects.requireNonNull(until, "until");
-        Objects.requireNonNull(untilDefinition, "untilDefinition");
+        Objects_requireNonNull(standardOffset, "standardOffset");
+        Objects_requireNonNull(until, "until");
+        Objects_requireNonNull(untilDefinition, "untilDefinition");
         TZWindow window = new TZWindow(standardOffset, until, untilDefinition);
         if (windowList.size() > 0) {
             TZWindow previous = windowList.get(windowList.size() - 1);
@@ -192,7 +193,7 @@ class ZoneRulesBuilder {
             LocalDateTime transitionDateTime,
             TimeDefinition timeDefinition,
             int savingAmountSecs) {
-        Objects.requireNonNull(transitionDateTime, "transitionDateTime");
+        Objects_requireNonNull(transitionDateTime, "transitionDateTime");
         return addRuleToWindow(
                 transitionDateTime.getYear(), transitionDateTime.getYear(),
                 transitionDateTime.getMonth(), transitionDateTime.getDayOfMonth(),
@@ -264,9 +265,9 @@ class ZoneRulesBuilder {
             boolean timeEndOfDay,
             TimeDefinition timeDefinition,
             int savingAmountSecs) {
-        Objects.requireNonNull(month, "month");
-        Objects.requireNonNull(time, "time");
-        Objects.requireNonNull(timeDefinition, "timeDefinition");
+        Objects_requireNonNull(month, "month");
+        Objects_requireNonNull(time, "time");
+        Objects_requireNonNull(timeDefinition, "timeDefinition");
         YEAR.checkValidValue(startYear);
         YEAR.checkValidValue(endYear);
         if (dayOfMonthIndicator < -28 || dayOfMonthIndicator > 31 || dayOfMonthIndicator == 0) {
@@ -312,7 +313,7 @@ class ZoneRulesBuilder {
      * @throws IllegalStateException if there is only one rule defined as being forever for any given window
      */
     ZoneRules toRules(String zoneId, Map<Object, Object> deduplicateMap) {
-        Objects.requireNonNull(zoneId, "zoneId");
+        Objects_requireNonNull(zoneId, "zoneId");
         this.deduplicateMap = deduplicateMap;
         if (windowList.isEmpty()) {
             throw new IllegalStateException("No windows have been added to the builder");

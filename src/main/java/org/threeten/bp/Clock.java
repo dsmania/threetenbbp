@@ -35,10 +35,11 @@ import static org.threeten.bp.LocalTime.NANOS_PER_MINUTE;
 import static org.threeten.bp.LocalTime.NANOS_PER_SECOND;
 
 import java.io.Serializable;
-import java.util.Objects;
 import java.util.TimeZone;
 
 import org.threeten.bp.jdk8.Jdk8Methods;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A clock providing access to the current instant, date and time using a time-zone.
@@ -154,7 +155,7 @@ public abstract class Clock {
      * @return a clock that uses the best available system clock in the specified zone, not null
      */
     public static Clock system(ZoneId zone) {
-        Objects.requireNonNull(zone, "zone");
+        Objects_requireNonNull(zone, "zone");
         return new SystemClock(zone);
     }
 
@@ -237,8 +238,8 @@ public abstract class Clock {
      * @throws ArithmeticException if the duration is too large to be represented as nanos
      */
     public static Clock tick(Clock baseClock, Duration tickDuration) {
-        Objects.requireNonNull(baseClock, "baseClock");
-        Objects.requireNonNull(tickDuration, "tickDuration");
+        Objects_requireNonNull(baseClock, "baseClock");
+        Objects_requireNonNull(tickDuration, "tickDuration");
         if (tickDuration.isNegative()) {
             throw new IllegalArgumentException("Tick duration must not be negative");
         }
@@ -272,8 +273,8 @@ public abstract class Clock {
      * @return a clock that always returns the same instant, not null
      */
     public static Clock fixed(Instant fixedInstant, ZoneId zone) {
-        Objects.requireNonNull(fixedInstant, "fixedInstant");
-        Objects.requireNonNull(zone, "zone");
+        Objects_requireNonNull(fixedInstant, "fixedInstant");
+        Objects_requireNonNull(zone, "zone");
         return new FixedClock(fixedInstant, zone);
     }
 
@@ -298,8 +299,8 @@ public abstract class Clock {
      * @return a clock based on the base clock with the duration added, not null
      */
     public static Clock offset(Clock baseClock, Duration offsetDuration) {
-        Objects.requireNonNull(baseClock, "baseClock");
-        Objects.requireNonNull(offsetDuration, "offsetDuration");
+        Objects_requireNonNull(baseClock, "baseClock");
+        Objects_requireNonNull(offsetDuration, "offsetDuration");
         if (offsetDuration.equals(Duration.ZERO)) {
             return baseClock;
         }

@@ -46,7 +46,6 @@ import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
-import java.util.Objects;
 
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.DateTimeParseException;
@@ -63,6 +62,9 @@ import org.threeten.bp.temporal.TemporalQueries;
 import org.threeten.bp.temporal.TemporalQuery;
 import org.threeten.bp.temporal.TemporalUnit;
 import org.threeten.bp.temporal.ValueRange;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Long_compare;
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * An instantaneous point on the time-line.
@@ -239,7 +241,7 @@ public final class Instant
      * @return the current instant, not null
      */
     public static Instant now(Clock clock) {
-        Objects.requireNonNull(clock, "clock");
+        Objects_requireNonNull(clock, "clock");
         return clock.instant();
     }
 
@@ -938,7 +940,7 @@ public final class Instant
     @Override
     public long periodUntil(Temporal endInstant, TemporalUnit unit) {
         if (endInstant instanceof Instant == false) {
-            Objects.requireNonNull(endInstant, "endInstant");
+            Objects_requireNonNull(endInstant, "endInstant");
             throw new DateTimeException("Unable to calculate period between objects of two different types");
         }
         Instant end = (Instant) endInstant;
@@ -1038,7 +1040,7 @@ public final class Instant
      */
     @Override
     public int compareTo(Instant otherInstant) {
-        int cmp = Long.compare(seconds, otherInstant.seconds);
+        int cmp = Long_compare(seconds, otherInstant.seconds);
         if (cmp != 0) {
             return cmp;
         }

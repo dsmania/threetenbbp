@@ -35,7 +35,6 @@ import static org.threeten.bp.temporal.ChronoField.EPOCH_DAY;
 import static org.threeten.bp.temporal.ChronoField.INSTANT_SECONDS;
 
 import java.util.Locale;
-import java.util.Objects;
 
 import org.threeten.bp.DateTimeException;
 import org.threeten.bp.Instant;
@@ -49,6 +48,9 @@ import org.threeten.bp.temporal.TemporalField;
 import org.threeten.bp.temporal.TemporalQueries;
 import org.threeten.bp.temporal.TemporalQuery;
 import org.threeten.bp.temporal.ValueRange;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_equals;
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * Context object used during date and time printing.
@@ -110,10 +112,10 @@ final class DateTimePrintContext {
         // ensure minimal change
         Chronology temporalChrono = Chronology.from(temporal);  // default to ISO, handles Instant
         ZoneId temporalZone = temporal.query(TemporalQueries.zone());  // zone then offset, handles OffsetDateTime
-        if (temporal.isSupported(EPOCH_DAY) == false || Objects.equals(overrideChrono, temporalChrono)) {
+        if (temporal.isSupported(EPOCH_DAY) == false || Objects_equals(overrideChrono, temporalChrono)) {
             overrideChrono = null;
         }
-        if (temporal.isSupported(INSTANT_SECONDS) == false || Objects.equals(overrideZone, temporalZone)) {
+        if (temporal.isSupported(INSTANT_SECONDS) == false || Objects_equals(overrideZone, temporalZone)) {
             overrideZone = null;
         }
         if (overrideChrono == null && overrideZone == null) {
@@ -271,7 +273,7 @@ final class DateTimePrintContext {
      * @param temporal  the date-time object, not null
      */
     void setDateTime(TemporalAccessor temporal) {
-        Objects.requireNonNull(temporal, "temporal");
+        Objects_requireNonNull(temporal, "temporal");
         this.temporal = temporal;
     }
 
@@ -284,7 +286,7 @@ final class DateTimePrintContext {
      * @param locale  the locale, not null
      */
     void setLocale(Locale locale) {
-        Objects.requireNonNull(locale, "locale");
+        Objects_requireNonNull(locale, "locale");
         this.locale = locale;
     }
 

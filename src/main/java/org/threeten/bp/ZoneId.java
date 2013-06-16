@@ -38,7 +38,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.TimeZone;
 
 import org.threeten.bp.format.DateTimeFormatterBuilder;
@@ -51,6 +50,8 @@ import org.threeten.bp.temporal.TemporalQuery;
 import org.threeten.bp.zone.ZoneRules;
 import org.threeten.bp.zone.ZoneRulesException;
 import org.threeten.bp.zone.ZoneRulesProvider;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A time-zone ID, such as {@code Europe/Paris}.
@@ -268,8 +269,8 @@ public abstract class ZoneId implements Serializable {
      * @throws ZoneRulesException if the zone region ID cannot be found
      */
     public static ZoneId of(String zoneId, Map<String, String> aliasMap) {
-        Objects.requireNonNull(zoneId, "zoneId");
-        Objects.requireNonNull(aliasMap, "aliasMap");
+        Objects_requireNonNull(zoneId, "zoneId");
+        Objects_requireNonNull(aliasMap, "aliasMap");
         String id = aliasMap.get(zoneId);
         id = (id != null ? id : zoneId);
         return of(id);
@@ -311,7 +312,7 @@ public abstract class ZoneId implements Serializable {
      * @throws ZoneRulesException if the zone region ID cannot be found
      */
     public static ZoneId of(String zoneId) {
-        Objects.requireNonNull(zoneId, "zoneId");
+        Objects_requireNonNull(zoneId, "zoneId");
         if (zoneId.length() <= 1 || zoneId.startsWith("+") || zoneId.startsWith("-")) {
             return ZoneOffset.of(zoneId);
         } else if (zoneId.startsWith("UTC") || zoneId.startsWith("GMT")) {

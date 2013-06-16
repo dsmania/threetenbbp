@@ -37,7 +37,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
-import java.util.Objects;
 
 import org.threeten.bp.DateTimeException;
 import org.threeten.bp.LocalTime;
@@ -51,6 +50,8 @@ import org.threeten.bp.temporal.TemporalAdjuster;
 import org.threeten.bp.temporal.TemporalField;
 import org.threeten.bp.temporal.TemporalUnit;
 import org.threeten.bp.temporal.ValueRange;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A date-time without a time-zone for the calendar neutral API.
@@ -153,8 +154,8 @@ final class ChronoLocalDateTimeImpl<D extends ChronoLocalDate<D>>
      * @param time  the time part of the date-time, not null
      */
     private ChronoLocalDateTimeImpl(ChronoLocalDate<D> date, LocalTime time) {
-        Objects.requireNonNull(date, "date");
-        Objects.requireNonNull(time, "time");
+        Objects_requireNonNull(date, "date");
+        Objects_requireNonNull(time, "time");
         this.date = date;
         this.time = time;
     }

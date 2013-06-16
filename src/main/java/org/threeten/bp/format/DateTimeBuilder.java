@@ -64,7 +64,6 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import org.threeten.bp.DateTimeException;
 import org.threeten.bp.DayOfWeek;
@@ -79,6 +78,8 @@ import org.threeten.bp.temporal.TemporalAccessor;
 import org.threeten.bp.temporal.TemporalField;
 import org.threeten.bp.temporal.TemporalQueries;
 import org.threeten.bp.temporal.TemporalQuery;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * Builder that can holds date and time fields and related date and time objects.
@@ -169,7 +170,7 @@ final class DateTimeBuilder
      * @throws DateTimeException if the field is already present with a different value
      */
     DateTimeBuilder addFieldValue(TemporalField field, long value) {
-        Objects.requireNonNull(field, "field");
+        Objects_requireNonNull(field, "field");
         Long old = getFieldValue0(field);  // check first for better error message
         if (old != null && old.longValue() != value) {
             throw new DateTimeException("Conflict found: " + field + " " + old + " differs from " + field + " " + value + ": " + this);
@@ -428,7 +429,7 @@ final class DateTimeBuilder
         try {
             Method m = type.getDeclaredMethod("from", TemporalAccessor.class);
             return type.cast(m.invoke(null, temporal));
-        } catch (ReflectiveOperationException ex) {
+        } catch (Exception ex) { // BBP: Originally ReflectiveOperationException
             if (ex.getCause() instanceof DateTimeException == false) {
                 throw new DateTimeException("Unable to invoke method from(DateTime)", ex);
             }
@@ -450,7 +451,7 @@ final class DateTimeBuilder
 
     @Override
     public long getLong(TemporalField field) {
-        Objects.requireNonNull(field, "field");
+        Objects_requireNonNull(field, "field");
         Long value = getFieldValue0(field);
         if (value == null) {
             if (date != null && date.isSupported(field)) {

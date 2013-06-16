@@ -45,7 +45,6 @@ import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
-import java.util.Objects;
 
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.DateTimeParseException;
@@ -62,6 +61,9 @@ import org.threeten.bp.temporal.TemporalQuery;
 import org.threeten.bp.temporal.TemporalUnit;
 import org.threeten.bp.temporal.ValueRange;
 import org.threeten.bp.zone.ZoneRules;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Long_compare;
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A time with an offset from UTC/Greenwich in the ISO-8601 calendar system,
@@ -159,7 +161,7 @@ public final class OffsetTime
      * @return the current time, not null
      */
     public static OffsetTime now(Clock clock) {
-        Objects.requireNonNull(clock, "clock");
+        Objects_requireNonNull(clock, "clock");
         final Instant now = clock.instant();  // called once
         return ofInstant(now, clock.getZone().getRules().getOffset(now));
     }
@@ -216,8 +218,8 @@ public final class OffsetTime
      * @return the offset time, not null
      */
     public static OffsetTime ofInstant(Instant instant, ZoneId zone) {
-        Objects.requireNonNull(instant, "instant");
-        Objects.requireNonNull(zone, "zone");
+        Objects_requireNonNull(instant, "instant");
+        Objects_requireNonNull(zone, "zone");
         ZoneRules rules = zone.getRules();
         ZoneOffset offset = rules.getOffset(instant);
         long secsOfDay = instant.getEpochSecond() % SECONDS_PER_DAY;
@@ -284,7 +286,7 @@ public final class OffsetTime
      * @throws DateTimeParseException if the text cannot be parsed
      */
     public static OffsetTime parse(CharSequence text, DateTimeFormatter formatter) {
-        Objects.requireNonNull(formatter, "formatter");
+        Objects_requireNonNull(formatter, "formatter");
         return formatter.parse(text, OffsetTime.class);
     }
 
@@ -296,8 +298,8 @@ public final class OffsetTime
      * @param offset  the zone offset, not null
      */
     private OffsetTime(LocalTime time, ZoneOffset offset) {
-        this.time = Objects.requireNonNull(time, "time");
-        this.offset = Objects.requireNonNull(offset, "offset");
+        this.time = Objects_requireNonNull(time, "time");
+        this.offset = Objects_requireNonNull(offset, "offset");
     }
 
     /**
@@ -1051,7 +1053,7 @@ public final class OffsetTime
     @Override
     public long periodUntil(Temporal endTime, TemporalUnit unit) {
         if (endTime instanceof OffsetTime == false) {
-            Objects.requireNonNull(endTime, "endTime");
+            Objects_requireNonNull(endTime, "endTime");
             throw new DateTimeException("Unable to calculate period between objects of two different types");
         }
         if (unit instanceof ChronoUnit) {
@@ -1143,7 +1145,7 @@ public final class OffsetTime
         if (offset.equals(other.offset)) {
             return time.compareTo(other.time);
         }
-        int compare = Long.compare(toEpochNano(), other.toEpochNano());
+        int compare = Long_compare(toEpochNano(), other.toEpochNano());
         if (compare == 0) {
             compare = time.compareTo(other.time);
         }
@@ -1265,7 +1267,7 @@ public final class OffsetTime
      * @throws DateTimeException if an error occurs during printing
      */
     public String toString(DateTimeFormatter formatter) {
-        Objects.requireNonNull(formatter, "formatter");
+        Objects_requireNonNull(formatter, "formatter");
         return formatter.format(this);
     }
 

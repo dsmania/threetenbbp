@@ -38,7 +38,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import org.threeten.bp.Clock;
 import org.threeten.bp.DateTimeException;
@@ -52,6 +51,8 @@ import org.threeten.bp.temporal.ValueRange;
 
 import sun.util.calendar.CalendarSystem;
 import sun.util.calendar.LocalGregorianCalendar;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * The Japanese Imperial calendar system.
@@ -256,7 +257,7 @@ public final class JapaneseChronology extends Chronology implements Serializable
 
     @Override  // override with covariant return type
     public JapaneseDate dateNow(Clock clock) {
-        Objects.requireNonNull(clock, "clock");
+        Objects_requireNonNull(clock, "clock");
         return (JapaneseDate) super.dateNow(clock);
     }
 

@@ -54,6 +54,8 @@ import org.threeten.bp.chrono.Chronology;
 import org.threeten.bp.chrono.IsoChronology;
 import org.threeten.bp.jdk8.Jdk8Methods;
 
+import static org.threeten.bp.jdk7.Jdk7Methods.Long_compare;
+
 /**
  * Fields and units specific to the ISO-8601 calendar system,
  * including quarter-of-year and week-based-year.
@@ -416,7 +418,7 @@ public final class IsoFields {
 
         @Override
         public int compare(TemporalAccessor temporal1, TemporalAccessor temporal2) {
-            return Long.compare(temporal1.getLong(this), temporal2.getLong(this));
+            return Long_compare(temporal1.getLong(this), temporal2.getLong(this));
         }
 
         @Override

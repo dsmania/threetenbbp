@@ -54,6 +54,8 @@ import org.threeten.bp.ZoneOffset;
 import org.threeten.bp.chrono.ChronoLocalDate;
 import org.threeten.bp.chrono.Chronology;
 
+import static org.threeten.bp.jdk7.Jdk7Methods.Long_compare;
+
 /**
  * A standard set of fields.
  * <p>
@@ -580,7 +582,7 @@ public enum ChronoField implements TemporalField {
     //-------------------------------------------------------------------------
     @Override
     public int compare(TemporalAccessor temporal1, TemporalAccessor temporal2) {
-        return Long.compare(temporal1.getLong(this), temporal2.getLong(this));
+        return Long_compare(temporal1.getLong(this), temporal2.getLong(this));
     }
 
     //-----------------------------------------------------------------------

@@ -37,11 +37,13 @@ import static org.threeten.bp.temporal.ChronoUnit.SECONDS;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import org.threeten.bp.temporal.Temporal;
 import org.threeten.bp.temporal.TemporalAmount;
 import org.threeten.bp.temporal.TemporalUnit;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Long_compare;
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * Mock period of time measured using a single unit, such as {@code 3 Days}.
@@ -82,7 +84,7 @@ public final class MockSimplePeriod
     }
 
     private MockSimplePeriod(long amount, TemporalUnit unit) {
-        Objects.requireNonNull(unit, "unit");
+        Objects_requireNonNull(unit, "unit");
         if (unit == FOREVER) {
             throw new DateTimeException("Cannot create a period of the Forever unit");
         }
@@ -130,7 +132,7 @@ public final class MockSimplePeriod
         if (unit.equals(otherPeriod.getUnit()) == false) {
             throw new IllegalArgumentException("Units cannot be compared: " + unit + " and " + otherPeriod.getUnit());
         }
-        return Long.compare(amount, otherPeriod.amount);
+        return Long_compare(amount, otherPeriod.amount);
     }
 
     @Override

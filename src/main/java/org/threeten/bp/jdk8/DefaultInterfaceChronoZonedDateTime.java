@@ -35,8 +35,6 @@ import static org.threeten.bp.temporal.ChronoField.INSTANT_SECONDS;
 import static org.threeten.bp.temporal.ChronoField.OFFSET_SECONDS;
 import static org.threeten.bp.temporal.ChronoUnit.NANOS;
 
-import java.util.Objects;
-
 import org.threeten.bp.DateTimeException;
 import org.threeten.bp.Instant;
 import org.threeten.bp.LocalDate;
@@ -52,6 +50,9 @@ import org.threeten.bp.temporal.TemporalQueries;
 import org.threeten.bp.temporal.TemporalQuery;
 import org.threeten.bp.temporal.TemporalUnit;
 import org.threeten.bp.temporal.ValueRange;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Long_compare;
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A temporary class providing implementations that will become default interface
@@ -167,7 +168,7 @@ public abstract class DefaultInterfaceChronoZonedDateTime<D extends ChronoLocalD
     //-------------------------------------------------------------------------
     @Override
     public int compareTo(ChronoZonedDateTime<?> other) {
-        int cmp = Long.compare(toEpochSecond(), other.toEpochSecond());
+        int cmp = Long_compare(toEpochSecond(), other.toEpochSecond());
         if (cmp == 0) {
             cmp = toLocalTime().getNano() - other.toLocalTime().getNano();
             if (cmp == 0) {
@@ -234,7 +235,7 @@ public abstract class DefaultInterfaceChronoZonedDateTime<D extends ChronoLocalD
 
     @Override
     public String toString(DateTimeFormatter formatter) {
-        Objects.requireNonNull(formatter, "formatter");
+        Objects_requireNonNull(formatter, "formatter");
         return formatter.format(this);
     }
 

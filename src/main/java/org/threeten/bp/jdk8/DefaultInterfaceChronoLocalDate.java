@@ -38,8 +38,6 @@ import static org.threeten.bp.temporal.ChronoField.MONTH_OF_YEAR;
 import static org.threeten.bp.temporal.ChronoField.YEAR;
 import static org.threeten.bp.temporal.ChronoField.YEAR_OF_ERA;
 
-import java.util.Objects;
-
 import org.threeten.bp.LocalTime;
 import org.threeten.bp.chrono.ChronoLocalDate;
 import org.threeten.bp.chrono.ChronoLocalDateTime;
@@ -54,6 +52,9 @@ import org.threeten.bp.temporal.TemporalField;
 import org.threeten.bp.temporal.TemporalQueries;
 import org.threeten.bp.temporal.TemporalQuery;
 import org.threeten.bp.temporal.TemporalUnit;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Long_compare;
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A temporary class providing implementations that will become default interface
@@ -136,7 +137,7 @@ public abstract class DefaultInterfaceChronoLocalDate<D extends ChronoLocalDate<
     //-------------------------------------------------------------------------
     @Override
     public int compareTo(ChronoLocalDate<?> other) {
-        int cmp = Long.compare(toEpochDay(), other.toEpochDay());
+        int cmp = Long_compare(toEpochDay(), other.toEpochDay());
         if (cmp == 0) {
             cmp = getChronology().compareTo(other.getChronology());
         }
@@ -196,7 +197,7 @@ public abstract class DefaultInterfaceChronoLocalDate<D extends ChronoLocalDate<
 
     @Override
     public String toString(DateTimeFormatter formatter) {
-        Objects.requireNonNull(formatter, "formatter");
+        Objects_requireNonNull(formatter, "formatter");
         return formatter.format(this);
     }
 

@@ -42,7 +42,6 @@ import java.io.InvalidObjectException;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 
 import org.threeten.bp.chrono.ChronoZonedDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
@@ -61,6 +60,8 @@ import org.threeten.bp.temporal.TemporalUnit;
 import org.threeten.bp.temporal.ValueRange;
 import org.threeten.bp.zone.ZoneOffsetTransition;
 import org.threeten.bp.zone.ZoneRules;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A date-time with a time-zone in the ISO-8601 calendar system,
@@ -187,7 +188,7 @@ public final class ZonedDateTime
      * @return the current date-time, not null
      */
     public static ZonedDateTime now(Clock clock) {
-        Objects.requireNonNull(clock, "clock");
+        Objects_requireNonNull(clock, "clock");
         final Instant now = clock.instant();  // called once
         return ofInstant(now, clock.getZone());
     }
@@ -322,8 +323,8 @@ public final class ZonedDateTime
      * @return the zoned date-time, not null
      */
     public static ZonedDateTime ofLocal(LocalDateTime localDateTime, ZoneId zone, ZoneOffset preferredOffset) {
-        Objects.requireNonNull(localDateTime, "localDateTime");
-        Objects.requireNonNull(zone, "zone");
+        Objects_requireNonNull(localDateTime, "localDateTime");
+        Objects_requireNonNull(zone, "zone");
         if (zone instanceof ZoneOffset) {
             return new ZonedDateTime(localDateTime, (ZoneOffset) zone, zone);
         }
@@ -340,7 +341,7 @@ public final class ZonedDateTime
             if (preferredOffset != null && validOffsets.contains(preferredOffset)) {
                 offset = preferredOffset;
             } else {
-                offset = Objects.requireNonNull(validOffsets.get(0), "offset");  // protect against bad ZoneRules
+                offset = Objects_requireNonNull(validOffsets.get(0), "offset");  // protect against bad ZoneRules
             }
         }
         return new ZonedDateTime(localDateTime, offset, zone);
@@ -362,8 +363,8 @@ public final class ZonedDateTime
      * @throws DateTimeException if the result exceeds the supported range
      */
     public static ZonedDateTime ofInstant(Instant instant, ZoneId zone) {
-        Objects.requireNonNull(instant, "instant");
-        Objects.requireNonNull(zone, "zone");
+        Objects_requireNonNull(instant, "instant");
+        Objects_requireNonNull(zone, "zone");
         return create(instant.getEpochSecond(), instant.getNano(), zone);
     }
 
@@ -388,9 +389,9 @@ public final class ZonedDateTime
      * @return the zoned date-time, not null
      */
     public static ZonedDateTime ofInstant(LocalDateTime localDateTime, ZoneOffset offset, ZoneId zone) {
-        Objects.requireNonNull(localDateTime, "localDateTime");
-        Objects.requireNonNull(offset, "offset");
-        Objects.requireNonNull(zone, "zone");
+        Objects_requireNonNull(localDateTime, "localDateTime");
+        Objects_requireNonNull(offset, "offset");
+        Objects_requireNonNull(zone, "zone");
         return create(localDateTime.toEpochSecond(offset), localDateTime.getNano(), zone);
     }
 
@@ -427,9 +428,9 @@ public final class ZonedDateTime
      * @return the zoned date-time, not null
      */
     public static ZonedDateTime ofStrict(LocalDateTime localDateTime, ZoneOffset offset, ZoneId zone) {
-        Objects.requireNonNull(localDateTime, "localDateTime");
-        Objects.requireNonNull(offset, "offset");
-        Objects.requireNonNull(zone, "zone");
+        Objects_requireNonNull(localDateTime, "localDateTime");
+        Objects_requireNonNull(offset, "offset");
+        Objects_requireNonNull(zone, "zone");
         ZoneRules rules = zone.getRules();
         if (rules.isValidOffset(localDateTime, offset) == false) {
             ZoneOffsetTransition trans = rules.getTransition(localDateTime);
@@ -468,9 +469,9 @@ public final class ZonedDateTime
      * @return the zoned date-time, not null
      */
     private static ZonedDateTime ofLenient(LocalDateTime localDateTime, ZoneOffset offset, ZoneId zone) {
-        Objects.requireNonNull(localDateTime, "localDateTime");
-        Objects.requireNonNull(offset, "offset");
-        Objects.requireNonNull(zone, "zone");
+        Objects_requireNonNull(localDateTime, "localDateTime");
+        Objects_requireNonNull(offset, "offset");
+        Objects_requireNonNull(zone, "zone");
         if (zone instanceof ZoneOffset && offset.equals(zone) == false) {
             throw new IllegalArgumentException("ZoneId must match ZoneOffset");
         }
@@ -543,7 +544,7 @@ public final class ZonedDateTime
      * @throws DateTimeParseException if the text cannot be parsed
      */
     public static ZonedDateTime parse(CharSequence text, DateTimeFormatter formatter) {
-        Objects.requireNonNull(formatter, "formatter");
+        Objects_requireNonNull(formatter, "formatter");
         return formatter.parse(text, ZonedDateTime.class);
     }
 
@@ -863,7 +864,7 @@ public final class ZonedDateTime
      */
     @Override
     public ZonedDateTime withZoneSameLocal(ZoneId zone) {
-        Objects.requireNonNull(zone, "zone");
+        Objects_requireNonNull(zone, "zone");
         return this.zone.equals(zone) ? this : ofLocal(dateTime, zone, offset);
     }
 
@@ -886,7 +887,7 @@ public final class ZonedDateTime
      */
     @Override
     public ZonedDateTime withZoneSameInstant(ZoneId zone) {
-        Objects.requireNonNull(zone, "zone");
+        Objects_requireNonNull(zone, "zone");
         return this.zone.equals(zone) ? this :
             create(dateTime.toEpochSecond(offset), dateTime.getNano(), zone);
     }
@@ -1938,7 +1939,7 @@ public final class ZonedDateTime
     @Override
     public long periodUntil(Temporal endDateTime, TemporalUnit unit) {
         if (endDateTime instanceof ZonedDateTime == false) {
-            Objects.requireNonNull(endDateTime, "endDateTime");
+            Objects_requireNonNull(endDateTime, "endDateTime");
             throw new DateTimeException("Unable to calculate period between objects of two different types");
         }
         if (unit instanceof ChronoUnit) {

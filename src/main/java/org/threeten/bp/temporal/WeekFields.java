@@ -49,7 +49,6 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -57,6 +56,9 @@ import org.threeten.bp.DayOfWeek;
 import org.threeten.bp.chrono.ChronoLocalDate;
 import org.threeten.bp.chrono.Chronology;
 import org.threeten.bp.jdk8.Jdk8Methods;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Long_compare;
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * Localized definitions of the day-of-week, week-of-month and week-of-year fields.
@@ -191,7 +193,7 @@ public final class WeekFields implements Serializable {
      * @return the week-definition, not null
      */
     public static WeekFields of(Locale locale) {
-        Objects.requireNonNull(locale, "locale");
+        Objects_requireNonNull(locale, "locale");
         locale = new Locale(locale.getLanguage(), locale.getCountry());  // elminate variants
 
         // obtain these from GregorianCalendar for now
@@ -242,7 +244,7 @@ public final class WeekFields implements Serializable {
      * @throws IllegalArgumentException if the minimal days value is invalid
      */
     private WeekFields(DayOfWeek firstDayOfWeek, int minimalDaysInFirstWeek) {
-        Objects.requireNonNull(firstDayOfWeek, "firstDayOfWeek");
+        Objects_requireNonNull(firstDayOfWeek, "firstDayOfWeek");
         if (minimalDaysInFirstWeek < 1 || minimalDaysInFirstWeek > 7) {
             throw new IllegalArgumentException("Minimal number of days is invalid");
         }
@@ -612,7 +614,7 @@ public final class WeekFields implements Serializable {
         //-------------------------------------------------------------------------
         @Override
         public int compare(TemporalAccessor temporal1, TemporalAccessor temporal2) {
-            return Long.compare(temporal1.getLong(this), temporal2.getLong(this));
+            return Long_compare(temporal1.getLong(this), temporal2.getLong(this));
         }
 
         //-----------------------------------------------------------------------

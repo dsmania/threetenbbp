@@ -47,7 +47,6 @@ import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
-import java.util.Objects;
 
 import org.threeten.bp.chrono.ChronoLocalDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
@@ -66,6 +65,8 @@ import org.threeten.bp.temporal.TemporalQuery;
 import org.threeten.bp.temporal.TemporalUnit;
 import org.threeten.bp.temporal.ValueRange;
 import org.threeten.bp.zone.ZoneRules;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A date-time without a time-zone in the ISO-8601 calendar system,
@@ -170,7 +171,7 @@ public final class LocalDateTime
      * @return the current date-time, not null
      */
     public static LocalDateTime now(Clock clock) {
-        Objects.requireNonNull(clock, "clock");
+        Objects_requireNonNull(clock, "clock");
         final Instant now = clock.instant();  // called once
         ZoneOffset offset = clock.getZone().getRules().getOffset(now);
         return ofEpochSecond(now.getEpochSecond(), now.getNano(), offset);
@@ -322,8 +323,8 @@ public final class LocalDateTime
      * @return the local date-time, not null
      */
     public static LocalDateTime of(LocalDate date, LocalTime time) {
-        Objects.requireNonNull(date, "date");
-        Objects.requireNonNull(time, "time");
+        Objects_requireNonNull(date, "date");
+        Objects_requireNonNull(time, "time");
         return new LocalDateTime(date, time);
     }
 
@@ -342,8 +343,8 @@ public final class LocalDateTime
      * @throws DateTimeException if the result exceeds the supported range
      */
     public static LocalDateTime ofInstant(Instant instant, ZoneId zone) {
-        Objects.requireNonNull(instant, "instant");
-        Objects.requireNonNull(zone, "zone");
+        Objects_requireNonNull(instant, "instant");
+        Objects_requireNonNull(zone, "zone");
         ZoneRules rules = zone.getRules();
         ZoneOffset offset = rules.getOffset(instant);
         return ofEpochSecond(instant.getEpochSecond(), instant.getNano(), offset);
@@ -364,7 +365,7 @@ public final class LocalDateTime
      * @throws DateTimeException if the result exceeds the supported range
      */
     public static LocalDateTime ofEpochSecond(long epochSecond, int nanoOfSecond, ZoneOffset offset) {
-        Objects.requireNonNull(offset, "offset");
+        Objects_requireNonNull(offset, "offset");
         long localSecond = epochSecond + offset.getTotalSeconds();  // overflow caught later
         long localEpochDay = Jdk8Methods.floorDiv(localSecond, SECONDS_PER_DAY);
         int secsOfDay = Jdk8Methods.floorMod(localSecond, SECONDS_PER_DAY);
@@ -430,7 +431,7 @@ public final class LocalDateTime
      * @throws DateTimeParseException if the text cannot be parsed
      */
     public static LocalDateTime parse(CharSequence text, DateTimeFormatter formatter) {
-        Objects.requireNonNull(formatter, "formatter");
+        Objects_requireNonNull(formatter, "formatter");
         return formatter.parse(text, LocalDateTime.class);
     }
 
@@ -1500,7 +1501,7 @@ public final class LocalDateTime
     @Override
     public long periodUntil(Temporal endDateTime, TemporalUnit unit) {
         if (endDateTime instanceof LocalDateTime == false) {
-            Objects.requireNonNull(endDateTime, "endDateTime");
+            Objects_requireNonNull(endDateTime, "endDateTime");
             throw new DateTimeException("Unable to calculate period between objects of two different types");
         }
         LocalDateTime end = (LocalDateTime) endDateTime;

@@ -35,7 +35,6 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import org.threeten.bp.Clock;
 import org.threeten.bp.DateTimeException;
@@ -47,6 +46,8 @@ import org.threeten.bp.ZonedDateTime;
 import org.threeten.bp.temporal.ChronoField;
 import org.threeten.bp.temporal.TemporalAccessor;
 import org.threeten.bp.temporal.ValueRange;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * The ISO calendar system.
@@ -316,7 +317,7 @@ public final class IsoChronology extends Chronology implements Serializable {
      */
     @Override  // override with covariant return type
     public LocalDate dateNow(Clock clock) {
-        Objects.requireNonNull(clock, "clock");
+        Objects_requireNonNull(clock, "clock");
         return date(LocalDate.now(clock));
     }
 

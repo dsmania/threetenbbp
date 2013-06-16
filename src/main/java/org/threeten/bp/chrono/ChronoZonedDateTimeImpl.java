@@ -40,7 +40,6 @@ import java.io.ObjectOutput;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 
 import org.threeten.bp.DateTimeException;
 import org.threeten.bp.Instant;
@@ -55,6 +54,8 @@ import org.threeten.bp.temporal.TemporalField;
 import org.threeten.bp.temporal.TemporalUnit;
 import org.threeten.bp.zone.ZoneOffsetTransition;
 import org.threeten.bp.zone.ZoneRules;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A date-time with a time-zone in the calendar neutral API.
@@ -105,8 +106,8 @@ final class ChronoZonedDateTimeImpl<D extends ChronoLocalDate<D>>
      */
     static <R extends ChronoLocalDate<R>> ChronoZonedDateTime<R> ofBest(
             ChronoLocalDateTimeImpl<R> localDateTime, ZoneId zone, ZoneOffset preferredOffset) {
-        Objects.requireNonNull(localDateTime, "localDateTime");
-        Objects.requireNonNull(zone, "zone");
+        Objects_requireNonNull(localDateTime, "localDateTime");
+        Objects_requireNonNull(zone, "zone");
         if (zone instanceof ZoneOffset) {
             return new ChronoZonedDateTimeImpl<R>(localDateTime, (ZoneOffset) zone, zone);
         }
@@ -127,7 +128,7 @@ final class ChronoZonedDateTimeImpl<D extends ChronoLocalDate<D>>
                 offset = validOffsets.get(0);
             }
         }
-        Objects.requireNonNull(offset, "offset");  // protect against bad ZoneRules
+        Objects_requireNonNull(offset, "offset");  // protect against bad ZoneRules
         return new ChronoZonedDateTimeImpl<R>(localDateTime, offset, zone);
     }
 
@@ -142,7 +143,7 @@ final class ChronoZonedDateTimeImpl<D extends ChronoLocalDate<D>>
     static <R extends ChronoLocalDate<R>> ChronoZonedDateTimeImpl<R> ofInstant(Chronology chrono, Instant instant, ZoneId zone) {
         ZoneRules rules = zone.getRules();
         ZoneOffset offset = rules.getOffset(instant);
-        Objects.requireNonNull(offset, "offset");  // protect against bad ZoneRules
+        Objects_requireNonNull(offset, "offset");  // protect against bad ZoneRules
         LocalDateTime ldt = LocalDateTime.ofEpochSecond(instant.getEpochSecond(), instant.getNano(), offset);
         ChronoLocalDateTimeImpl<R> cldt = (ChronoLocalDateTimeImpl<R>) chrono.localDateTime(ldt);
         return new ChronoZonedDateTimeImpl<R>(cldt, offset, zone);
@@ -168,9 +169,9 @@ final class ChronoZonedDateTimeImpl<D extends ChronoLocalDate<D>>
      * @param zone  the zone ID, not null
      */
     private ChronoZonedDateTimeImpl(ChronoLocalDateTimeImpl<D> dateTime, ZoneOffset offset, ZoneId zone) {
-        this.dateTime = Objects.requireNonNull(dateTime, "dateTime");
-        this.offset = Objects.requireNonNull(offset, "offset");
-        this.zone = Objects.requireNonNull(zone, "zone");
+        this.dateTime = Objects_requireNonNull(dateTime, "dateTime");
+        this.offset = Objects_requireNonNull(offset, "offset");
+        this.zone = Objects_requireNonNull(zone, "zone");
     }
 
     //-----------------------------------------------------------------------
@@ -218,7 +219,7 @@ final class ChronoZonedDateTimeImpl<D extends ChronoLocalDate<D>>
 
     @Override
     public ChronoZonedDateTime<D> withZoneSameInstant(ZoneId zone) {
-        Objects.requireNonNull(zone, "zone");
+        Objects_requireNonNull(zone, "zone");
         return this.zone.equals(zone) ? this : create(dateTime.toInstant(offset), zone);
     }
 

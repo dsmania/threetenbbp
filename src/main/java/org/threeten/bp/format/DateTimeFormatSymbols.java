@@ -33,9 +33,10 @@ package org.threeten.bp.format;
 
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * Localized symbols used in date and time formatting.
@@ -108,7 +109,7 @@ public final class DateTimeFormatSymbols {
      * @return the info, not null
      */
     public static DateTimeFormatSymbols of(Locale locale) {
-        Objects.requireNonNull(locale, "locale");
+        Objects_requireNonNull(locale, "locale");
         DateTimeFormatSymbols info = CACHE.get(locale);
         if (info == null) {
             info = create(locale);

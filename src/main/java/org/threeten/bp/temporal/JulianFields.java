@@ -41,6 +41,8 @@ import java.util.Map;
 import org.threeten.bp.DateTimeException;
 import org.threeten.bp.jdk8.Jdk8Methods;
 
+import static org.threeten.bp.jdk7.Jdk7Methods.Long_compare;
+
 /**
  * A set of date fields that provide access to Julian Days.
  * <p>
@@ -201,7 +203,7 @@ public final class JulianFields {
 
         @Override
         public int compare(TemporalAccessor temporal1, TemporalAccessor temporal2) {
-            return Long.compare(temporal1.getLong(this), temporal2.getLong(this));
+            return Long_compare(temporal1.getLong(this), temporal2.getLong(this));
         }
 
         //-----------------------------------------------------------------------

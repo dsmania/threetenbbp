@@ -46,7 +46,6 @@ import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
-import java.util.Objects;
 
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.DateTimeParseException;
@@ -62,6 +61,9 @@ import org.threeten.bp.temporal.TemporalQueries;
 import org.threeten.bp.temporal.TemporalQuery;
 import org.threeten.bp.temporal.TemporalUnit;
 import org.threeten.bp.temporal.ValueRange;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Integer_compare;
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A time without time-zone in the ISO-8601 calendar system,
@@ -234,7 +236,7 @@ public final class LocalTime
      * @return the current time, not null
      */
     public static LocalTime now(Clock clock) {
-        Objects.requireNonNull(clock, "clock");
+        Objects_requireNonNull(clock, "clock");
         // inline OffsetTime factory to avoid creating object and InstantProvider checks
         final Instant now = clock.instant();  // called once
         ZoneOffset offset = clock.getZone().getRules().getOffset(now);
@@ -422,7 +424,7 @@ public final class LocalTime
      * @throws DateTimeParseException if the text cannot be parsed
      */
     public static LocalTime parse(CharSequence text, DateTimeFormatter formatter) {
-        Objects.requireNonNull(formatter, "formatter");
+        Objects_requireNonNull(formatter, "formatter");
         return formatter.parse(text, LocalTime.class);
     }
 
@@ -1270,7 +1272,7 @@ public final class LocalTime
     @Override
     public long periodUntil(Temporal endTime, TemporalUnit unit) {
         if (endTime instanceof LocalTime == false) {
-            Objects.requireNonNull(endTime, "endTime");
+            Objects_requireNonNull(endTime, "endTime");
             throw new DateTimeException("Unable to calculate period between objects of two different types");
         }
         LocalTime end = (LocalTime) endTime;
@@ -1358,13 +1360,13 @@ public final class LocalTime
      */
     @Override
     public int compareTo(LocalTime other) {
-        int cmp = Integer.compare(hour, other.hour);
+        int cmp = Integer_compare(hour, other.hour);
         if (cmp == 0) {
-            cmp = Integer.compare(minute, other.minute);
+            cmp = Integer_compare(minute, other.minute);
             if (cmp == 0) {
-                cmp = Integer.compare(second, other.second);
+                cmp = Integer_compare(second, other.second);
                 if (cmp == 0) {
-                    cmp = Integer.compare(nano, other.nano);
+                    cmp = Integer_compare(nano, other.nano);
                 }
             }
         }
@@ -1487,7 +1489,7 @@ public final class LocalTime
      * @throws DateTimeException if an error occurs during printing
      */
     public String toString(DateTimeFormatter formatter) {
-        Objects.requireNonNull(formatter, "formatter");
+        Objects_requireNonNull(formatter, "formatter");
         return formatter.format(this);
     }
 

@@ -46,6 +46,8 @@ import org.threeten.bp.temporal.TemporalAmount;
 import org.threeten.bp.temporal.TemporalField;
 import org.threeten.bp.temporal.TemporalUnit;
 
+import static org.threeten.bp.jdk7.Jdk7Methods.Long_compare;
+
 /**
  * A date without time-of-day or time-zone in an arbitrary chronology, intended
  * for advanced globalization use cases.
@@ -226,7 +228,7 @@ public interface ChronoLocalDate<D extends ChronoLocalDate<D>>
             new Comparator<ChronoLocalDate<?>>() {
         @Override
         public int compare(ChronoLocalDate<?> date1, ChronoLocalDate<?> date2) {
-            return Long.compare(date1.toEpochDay(), date2.toEpochDay());
+            return Long_compare(date1.toEpochDay(), date2.toEpochDay());
         }
     };
 

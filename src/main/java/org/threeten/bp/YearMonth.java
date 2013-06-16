@@ -44,7 +44,6 @@ import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
-import java.util.Objects;
 
 import org.threeten.bp.chrono.Chronology;
 import org.threeten.bp.chrono.IsoChronology;
@@ -65,6 +64,8 @@ import org.threeten.bp.temporal.TemporalQueries;
 import org.threeten.bp.temporal.TemporalQuery;
 import org.threeten.bp.temporal.TemporalUnit;
 import org.threeten.bp.temporal.ValueRange;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A year-month in the ISO-8601 calendar system, such as {@code 2007-12}.
@@ -170,7 +171,7 @@ public final class YearMonth
      * @throws DateTimeException if the year value is invalid
      */
     public static YearMonth of(int year, Month month) {
-        Objects.requireNonNull(month, "month");
+        Objects_requireNonNull(month, "month");
         return of(year, month.getValue());
     }
 
@@ -248,7 +249,7 @@ public final class YearMonth
      * @throws DateTimeParseException if the text cannot be parsed
      */
     public static YearMonth parse(CharSequence text, DateTimeFormatter formatter) {
-        Objects.requireNonNull(formatter, "formatter");
+        Objects_requireNonNull(formatter, "formatter");
         return formatter.parse(text, YearMonth.class);
     }
 
@@ -887,7 +888,7 @@ public final class YearMonth
     @Override
     public long periodUntil(Temporal endYearMonth, TemporalUnit unit) {
         if (endYearMonth instanceof YearMonth == false) {
-            Objects.requireNonNull(endYearMonth, "endYearMonth");
+            Objects_requireNonNull(endYearMonth, "endYearMonth");
             throw new DateTimeException("Unable to calculate period between objects of two different types");
         }
         YearMonth end = (YearMonth) endYearMonth;
@@ -1053,7 +1054,7 @@ public final class YearMonth
      * @throws DateTimeException if an error occurs during printing
      */
     public String toString(DateTimeFormatter formatter) {
-        Objects.requireNonNull(formatter, "formatter");
+        Objects_requireNonNull(formatter, "formatter");
         return formatter.format(this);
     }
 

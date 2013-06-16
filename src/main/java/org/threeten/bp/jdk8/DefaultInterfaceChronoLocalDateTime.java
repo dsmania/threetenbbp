@@ -35,8 +35,6 @@ import static org.threeten.bp.temporal.ChronoField.EPOCH_DAY;
 import static org.threeten.bp.temporal.ChronoField.NANO_OF_DAY;
 import static org.threeten.bp.temporal.ChronoUnit.NANOS;
 
-import java.util.Objects;
-
 import org.threeten.bp.Instant;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.ZoneOffset;
@@ -49,6 +47,8 @@ import org.threeten.bp.temporal.TemporalAmount;
 import org.threeten.bp.temporal.TemporalQueries;
 import org.threeten.bp.temporal.TemporalQuery;
 import org.threeten.bp.temporal.TemporalUnit;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A temporary class providing implementations that will become default interface
@@ -111,7 +111,7 @@ public abstract class DefaultInterfaceChronoLocalDateTime<D extends ChronoLocalD
 
     @Override
     public long toEpochSecond(ZoneOffset offset) {
-        Objects.requireNonNull(offset, "offset");
+        Objects_requireNonNull(offset, "offset");
         long epochDay = toLocalDate().toEpochDay();
         long secs = epochDay * 86400 + toLocalTime().toSecondOfDay();
         secs -= offset.getTotalSeconds();
@@ -179,7 +179,7 @@ public abstract class DefaultInterfaceChronoLocalDateTime<D extends ChronoLocalD
 
     @Override
     public String toString(DateTimeFormatter formatter) {
-        Objects.requireNonNull(formatter, "formatter");
+        Objects_requireNonNull(formatter, "formatter");
         return formatter.format(this);
     }
 

@@ -38,7 +38,6 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Objects;
 
 import org.threeten.bp.DayOfWeek;
 import org.threeten.bp.LocalDate;
@@ -47,6 +46,8 @@ import org.threeten.bp.LocalTime;
 import org.threeten.bp.Month;
 import org.threeten.bp.ZoneOffset;
 import org.threeten.bp.chrono.IsoChronology;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A rule expressing how to create a transition.
@@ -145,12 +146,12 @@ public final class ZoneOffsetTransitionRule implements Serializable {
             ZoneOffset standardOffset,
             ZoneOffset offsetBefore,
             ZoneOffset offsetAfter) {
-        Objects.requireNonNull(month, "month");
-        Objects.requireNonNull(time, "time");
-        Objects.requireNonNull(timeDefnition, "timeDefnition");
-        Objects.requireNonNull(standardOffset, "standardOffset");
-        Objects.requireNonNull(offsetBefore, "offsetBefore");
-        Objects.requireNonNull(offsetAfter, "offsetAfter");
+        Objects_requireNonNull(month, "month");
+        Objects_requireNonNull(time, "time");
+        Objects_requireNonNull(timeDefnition, "timeDefnition");
+        Objects_requireNonNull(standardOffset, "standardOffset");
+        Objects_requireNonNull(offsetBefore, "offsetBefore");
+        Objects_requireNonNull(offsetAfter, "offsetAfter");
         if (dayOfMonthIndicator < -28 || dayOfMonthIndicator > 31 || dayOfMonthIndicator == 0) {
             throw new IllegalArgumentException("Day of month indicator must be between -28 and 31 inclusive excluding zero");
         }

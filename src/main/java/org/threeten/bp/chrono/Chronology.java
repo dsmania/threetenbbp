@@ -39,7 +39,6 @@ import java.io.ObjectStreamException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -60,6 +59,8 @@ import org.threeten.bp.temporal.TemporalField;
 import org.threeten.bp.temporal.TemporalQueries;
 import org.threeten.bp.temporal.TemporalQuery;
 import org.threeten.bp.temporal.ValueRange;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A calendar system, used to organize and identify dates.
@@ -174,7 +175,7 @@ public abstract class Chronology implements Comparable<Chronology> {
      * @throws DateTimeException if unable to convert to an {@code Chrono}
      */
     public static Chronology from(TemporalAccessor temporal) {
-        Objects.requireNonNull(temporal, "temporal");
+        Objects_requireNonNull(temporal, "temporal");
         Chronology obj = temporal.query(TemporalQueries.chronology());
         return (obj != null ? obj : IsoChronology.INSTANCE);
     }
@@ -221,7 +222,7 @@ public abstract class Chronology implements Comparable<Chronology> {
      * @throws DateTimeException if the locale-specified calendar cannot be found
      */
     public static Chronology ofLocale(Locale locale) {
-        Objects.requireNonNull(locale, "locale");
+        Objects_requireNonNull(locale, "locale");
         String type = locale.getUnicodeLocaleType("ca");
         if (type == null || "iso".equals(type) || "iso8601".equals(type)) {
             return IsoChronology.INSTANCE;
@@ -504,7 +505,7 @@ public abstract class Chronology implements Comparable<Chronology> {
      * @throws DateTimeException if unable to create the date
      */
     public ChronoLocalDate<?> dateNow(Clock clock) {
-        Objects.requireNonNull(clock, "clock");
+        Objects_requireNonNull(clock, "clock");
         return date(LocalDate.now(clock));
     }
 

@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import org.threeten.bp.DateTimeException;
 import org.threeten.bp.ZoneId;
@@ -46,6 +45,8 @@ import org.threeten.bp.jdk8.Jdk8Methods;
 import org.threeten.bp.temporal.TemporalField;
 import org.threeten.bp.temporal.TemporalQueries;
 import org.threeten.bp.temporal.TemporalQuery;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * Context object used during date and time parsing.
@@ -322,7 +323,7 @@ final class DateTimeParseContext {
      * @return the new position
      */
     int setParsedField(TemporalField field, long value, int errorPos, int successPos) {
-        Objects.requireNonNull(field, "field");
+        Objects_requireNonNull(field, "field");
         Long old = currentParsed().fieldValues.put(field, value);
         return (old != null && old.longValue() != value) ? ~errorPos : successPos;
     }
@@ -336,7 +337,7 @@ final class DateTimeParseContext {
      * @param chrono  the parsed chronology, not null
      */
     void setParsed(Chronology chrono) {
-        Objects.requireNonNull(chrono, "chrono");
+        Objects_requireNonNull(chrono, "chrono");
         currentParsed().chrono = chrono;
     }
 
@@ -349,7 +350,7 @@ final class DateTimeParseContext {
      * @param zone  the parsed zone, not null
      */
     void setParsed(ZoneId zone) {
-        Objects.requireNonNull(zone, "zone");
+        Objects_requireNonNull(zone, "zone");
         currentParsed().zone = zone;
     }
 
@@ -455,7 +456,7 @@ final class DateTimeParseContext {
             for (Map.Entry<TemporalField, Long> change : changes.entrySet()) {
                 TemporalField changeField = change.getKey();
                 Long changeValue = change.getValue();
-                Objects.requireNonNull(changeField, "changeField");
+                Objects_requireNonNull(changeField, "changeField");
                 if (changeValue != null) {
                     Long old = fieldValues.put(changeField, changeValue);
                     if (old != null && old.longValue() != changeValue.longValue()) {
@@ -510,7 +511,7 @@ final class DateTimeParseContext {
      * @param locale  the locale, not null
      */
     void setLocale(Locale locale) {
-        Objects.requireNonNull(locale, "locale");
+        Objects_requireNonNull(locale, "locale");
         this.locale = locale;
     }
 

@@ -50,7 +50,6 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.StringTokenizer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -62,6 +61,8 @@ import org.threeten.bp.jdk8.Jdk8Methods;
 import org.threeten.bp.temporal.ChronoField;
 import org.threeten.bp.temporal.TemporalField;
 import org.threeten.bp.temporal.ValueRange;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A date in the Hijrah calendar system.
@@ -444,7 +445,7 @@ public final class HijrahDate
      * @throws InvalidCalendarFieldException if the day-of-month is invalid for the month-year
      */
     static HijrahDate of(HijrahEra era, int yearOfEra, int monthOfYear, int dayOfMonth) {
-        Objects.requireNonNull(era, "era");
+        Objects_requireNonNull(era, "era");
         checkValidYearOfEra(yearOfEra);
         checkValidMonth(monthOfYear);
         checkValidDayOfMonth(dayOfMonth);
@@ -1431,7 +1432,7 @@ public final class HijrahDate
                 if (br != null) {
                     try {
                         br.close();
-                    } catch (Exception e) {
+                    } catch (Exception ex) {
                         // Ignored
                     }
                 }

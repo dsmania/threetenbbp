@@ -34,13 +34,14 @@ package org.threeten.bp.zone;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import org.threeten.bp.Duration;
 import org.threeten.bp.Instant;
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.ZoneId;
 import org.threeten.bp.ZoneOffset;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * The rules defining how the zone offset varies for a single time-zone.
@@ -82,11 +83,11 @@ public abstract class ZoneRules {
                                List<ZoneOffsetTransition> standardOffsetTransitionList,
                                List<ZoneOffsetTransition> transitionList,
                                List<ZoneOffsetTransitionRule> lastRules) {
-        Objects.requireNonNull(baseStandardOffset, "baseStandardOffset");
-        Objects.requireNonNull(baseWallOffset, "baseWallOffset");
-        Objects.requireNonNull(standardOffsetTransitionList, "standardOffsetTransitionList");
-        Objects.requireNonNull(transitionList, "transitionList");
-        Objects.requireNonNull(lastRules, "lastRules");
+        Objects_requireNonNull(baseStandardOffset, "baseStandardOffset");
+        Objects_requireNonNull(baseWallOffset, "baseWallOffset");
+        Objects_requireNonNull(standardOffsetTransitionList, "standardOffsetTransitionList");
+        Objects_requireNonNull(transitionList, "transitionList");
+        Objects_requireNonNull(lastRules, "lastRules");
         return new StandardZoneRules(baseStandardOffset, baseWallOffset,
                              standardOffsetTransitionList, transitionList, lastRules);
     }
@@ -100,7 +101,7 @@ public abstract class ZoneRules {
      * @return the zone rules, not null
      */
     public static ZoneRules of(ZoneOffset offset) {
-        Objects.requireNonNull(offset, "offset");
+        Objects_requireNonNull(offset, "offset");
         return new Fixed(offset);
     }
 

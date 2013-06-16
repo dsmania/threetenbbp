@@ -37,7 +37,6 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import org.threeten.bp.Clock;
 import org.threeten.bp.DateTimeException;
@@ -47,6 +46,8 @@ import org.threeten.bp.ZoneId;
 import org.threeten.bp.temporal.ChronoField;
 import org.threeten.bp.temporal.TemporalAccessor;
 import org.threeten.bp.temporal.ValueRange;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * The Minguo calendar system.
@@ -205,7 +206,7 @@ public final class MinguoChronology extends Chronology implements Serializable {
 
     @Override  // override with covariant return type
     public MinguoDate dateNow(Clock clock) {
-        Objects.requireNonNull(clock, "clock");
+        Objects_requireNonNull(clock, "clock");
         return (MinguoDate) super.dateNow(clock);
     }
 

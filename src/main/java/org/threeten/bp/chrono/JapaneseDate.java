@@ -41,7 +41,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Objects;
 
 import org.threeten.bp.DateTimeException;
 import org.threeten.bp.LocalDate;
@@ -50,6 +49,8 @@ import org.threeten.bp.temporal.TemporalField;
 import org.threeten.bp.temporal.ValueRange;
 
 import sun.util.calendar.LocalGregorianCalendar;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A date in the Japanese Imperial calendar system.
@@ -98,7 +99,7 @@ public final class JapaneseDate
      *                           if the day-of-month is invalid for the month-year
      */
     static JapaneseDate of(JapaneseEra era, int yearOfEra, int month, int dayOfMonth) {
-        Objects.requireNonNull(era, "era");
+        Objects_requireNonNull(era, "era");
         LocalGregorianCalendar.Date jdate = JapaneseChronology.JCAL.newCalendarDate(null);
         jdate.setEra(era.getPrivateEra()).setDate(yearOfEra, month, dayOfMonth);
         if (!JapaneseChronology.JCAL.validate(jdate)) {

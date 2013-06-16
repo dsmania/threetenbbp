@@ -42,6 +42,9 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.threeten.bp.jdk8.Jdk8Methods;
 
+import static org.threeten.bp.jdk7.Jdk7Methods.Integer_compare;
+import static org.threeten.bp.jdk7.Jdk7Methods.Long_compare;
+
 /**
  * Test.
  */
@@ -369,7 +372,7 @@ public class TestDateTimes_implementation {
             int a = values[i];
             for (int j = 0; j < values.length; j++) {
                 int b = values[j];
-                assertEquals(Integer.compare(a, b), a < b ? -1 : (a > b ? 1 : 0), a + " <=> " + b);
+                assertEquals(Integer_compare(a, b), a < b ? -1 : (a > b ? 1 : 0), a + " <=> " + b);
             }
         }
     }
@@ -401,7 +404,7 @@ public class TestDateTimes_implementation {
             long a = values[i];
             for (int j = 0; j < values.length; j++) {
                 long b = values[j];
-                assertEquals(Long.compare(a, b), a < b ? -1 : (a > b ? 1 : 0), a + " <=> " + b);
+                assertEquals(Long_compare(a, b), a < b ? -1 : (a > b ? 1 : 0), a + " <=> " + b);
             }
         }
     }

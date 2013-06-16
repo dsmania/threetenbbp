@@ -41,13 +41,14 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.NavigableMap;
-import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicReferenceArray;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * Loads time-zone rules for 'TZDB'.
@@ -96,7 +97,7 @@ public final class TzdbZoneRulesProvider extends ZoneRulesProvider {
 
     @Override
     protected ZoneRules provideRules(String zoneId) {
-        Objects.requireNonNull(zoneId, "zoneId");
+        Objects_requireNonNull(zoneId, "zoneId");
         ZoneRules rules = versions.lastEntry().getValue().getRules(zoneId);
         if (rules == null) {
             throw new ZoneRulesException("Unknown time-zone ID: " + zoneId);

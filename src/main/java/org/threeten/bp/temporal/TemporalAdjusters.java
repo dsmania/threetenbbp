@@ -38,9 +38,9 @@ import static org.threeten.bp.temporal.ChronoUnit.DAYS;
 import static org.threeten.bp.temporal.ChronoUnit.MONTHS;
 import static org.threeten.bp.temporal.ChronoUnit.YEARS;
 
-import java.util.Objects;
-
 import org.threeten.bp.DayOfWeek;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * Common implementations of {@code TemporalAdjuster}.
@@ -258,7 +258,7 @@ public final class TemporalAdjusters {
      * @return the first in month adjuster, not null
      */
     public static TemporalAdjuster firstInMonth(DayOfWeek dayOfWeek) {
-        Objects.requireNonNull(dayOfWeek, "dayOfWeek");
+        Objects_requireNonNull(dayOfWeek, "dayOfWeek");
         return new DayOfWeekInMonth(1, dayOfWeek);
     }
 
@@ -279,7 +279,7 @@ public final class TemporalAdjusters {
      * @return the first in month adjuster, not null
      */
     public static TemporalAdjuster lastInMonth(DayOfWeek dayOfWeek) {
-        Objects.requireNonNull(dayOfWeek, "dayOfWeek");
+        Objects_requireNonNull(dayOfWeek, "dayOfWeek");
         return new DayOfWeekInMonth(-1, dayOfWeek);
     }
 
@@ -316,7 +316,7 @@ public final class TemporalAdjusters {
      * @return the day-of-week in month adjuster, not null
      */
     public static TemporalAdjuster dayOfWeekInMonth(int ordinal, DayOfWeek dayOfWeek) {
-        Objects.requireNonNull(dayOfWeek, "dayOfWeek");
+        Objects_requireNonNull(dayOfWeek, "dayOfWeek");
         return new DayOfWeekInMonth(ordinal, dayOfWeek);
     }
 
@@ -446,7 +446,7 @@ public final class TemporalAdjusters {
         private final int dowValue;
 
         private RelativeDayOfWeek(int relative, DayOfWeek dayOfWeek) {
-            Objects.requireNonNull(dayOfWeek, "dayOfWeek");
+            Objects_requireNonNull(dayOfWeek, "dayOfWeek");
             this.relative = relative;
             this.dowValue = dayOfWeek.getValue();
         }

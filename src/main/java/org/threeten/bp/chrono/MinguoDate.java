@@ -40,13 +40,14 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Objects;
 
 import org.threeten.bp.DateTimeException;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.temporal.ChronoField;
 import org.threeten.bp.temporal.TemporalField;
 import org.threeten.bp.temporal.ValueRange;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A date in the Minguo calendar system.
@@ -78,7 +79,7 @@ public final class MinguoDate
      * @param isoDate  the standard local date, validated not null
      */
     MinguoDate(LocalDate date) {
-        Objects.requireNonNull(date, "date");
+        Objects_requireNonNull(date, "date");
         this.isoDate = date;
     }
 

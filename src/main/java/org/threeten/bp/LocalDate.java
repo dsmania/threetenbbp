@@ -50,7 +50,6 @@ import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
-import java.util.Objects;
 
 import org.threeten.bp.chrono.ChronoLocalDate;
 import org.threeten.bp.chrono.Era;
@@ -73,6 +72,8 @@ import org.threeten.bp.temporal.TemporalUnit;
 import org.threeten.bp.temporal.ValueRange;
 import org.threeten.bp.zone.ZoneOffsetTransition;
 import org.threeten.bp.zone.ZoneRules;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A date without a time-zone in the ISO-8601 calendar system,
@@ -184,7 +185,7 @@ public final class LocalDate
      * @return the current date, not null
      */
     public static LocalDate now(Clock clock) {
-        Objects.requireNonNull(clock, "clock");
+        Objects_requireNonNull(clock, "clock");
         final Instant now = clock.instant();  // called once
         ZoneOffset offset = clock.getZone().getRules().getOffset(now);
         long epochSec = now.getEpochSecond() + offset.getTotalSeconds();  // overflow caught later
@@ -207,7 +208,7 @@ public final class LocalDate
      */
     public static LocalDate of(int year, Month month, int dayOfMonth) {
         YEAR.checkValidValue(year);
-        Objects.requireNonNull(month, "month");
+        Objects_requireNonNull(month, "month");
         DAY_OF_MONTH.checkValidValue(dayOfMonth);
         return create(year, month, dayOfMonth);
     }
@@ -353,7 +354,7 @@ public final class LocalDate
      * @throws DateTimeParseException if the text cannot be parsed
      */
     public static LocalDate parse(CharSequence text, DateTimeFormatter formatter) {
-        Objects.requireNonNull(formatter, "formatter");
+        Objects_requireNonNull(formatter, "formatter");
         return formatter.parse(text, LocalDate.class);
     }
 
@@ -1405,7 +1406,7 @@ public final class LocalDate
     @Override
     public long periodUntil(Temporal endDate, TemporalUnit unit) {
         if (endDate instanceof LocalDate == false) {
-            Objects.requireNonNull(endDate, "endDate");
+            Objects_requireNonNull(endDate, "endDate");
             throw new DateTimeException("Unable to calculate period between objects of two different types");
         }
         LocalDate end = (LocalDate) endDate;
@@ -1609,7 +1610,7 @@ public final class LocalDate
      * @return the zoned date-time formed from this date and the earliest valid time for the zone, not null
      */
     public ZonedDateTime atStartOfDay(ZoneId zone) {
-        Objects.requireNonNull(zone, "zone");
+        Objects_requireNonNull(zone, "zone");
         // need to handle case where there is a gap from 11:30 to 00:30
         // standard ZDT factory would result in 01:00 rather than 00:30
         LocalDateTime ldt = atTime(LocalTime.MIDNIGHT);

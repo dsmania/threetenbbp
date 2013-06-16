@@ -39,7 +39,6 @@ import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -52,6 +51,8 @@ import org.threeten.bp.temporal.TemporalQueries;
 import org.threeten.bp.temporal.TemporalQuery;
 import org.threeten.bp.temporal.ValueRange;
 import org.threeten.bp.zone.ZoneRules;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A time-zone offset from Greenwich/UTC, such as {@code +02:00}.
@@ -169,7 +170,7 @@ public final class ZoneOffset
      * @throws DateTimeException if the offset ID is invalid
      */
     public static ZoneOffset of(String offsetId) {
-        Objects.requireNonNull(offsetId, "offsetId");
+        Objects_requireNonNull(offsetId, "offsetId");
         // "Z" is always in the cache
         ZoneOffset offset = ID_CACHE.get(offsetId);
         if (offset != null) {

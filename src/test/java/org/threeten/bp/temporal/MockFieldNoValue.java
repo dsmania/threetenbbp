@@ -38,6 +38,8 @@ import java.util.Map;
 
 import org.threeten.bp.DateTimeException;
 
+import static org.threeten.bp.jdk7.Jdk7Methods.Long_compare;
+
 /**
  * Mock DateTimeField that returns null.
  */
@@ -67,7 +69,7 @@ public enum MockFieldNoValue implements TemporalField {
 
     @Override
     public int compare(TemporalAccessor dateTime1, TemporalAccessor dateTime2) {
-        return Long.compare(getFrom(dateTime1), getFrom(dateTime2));
+        return Long_compare(getFrom(dateTime1), getFrom(dateTime2));
     }
 
     //-----------------------------------------------------------------------

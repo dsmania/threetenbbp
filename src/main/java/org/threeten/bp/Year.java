@@ -42,7 +42,6 @@ import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
-import java.util.Objects;
 
 import org.threeten.bp.chrono.Chronology;
 import org.threeten.bp.chrono.IsoChronology;
@@ -63,6 +62,8 @@ import org.threeten.bp.temporal.TemporalQueries;
 import org.threeten.bp.temporal.TemporalQuery;
 import org.threeten.bp.temporal.TemporalUnit;
 import org.threeten.bp.temporal.ValueRange;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A year in the ISO-8601 calendar system, such as {@code 2007}.
@@ -245,7 +246,7 @@ public final class Year
      * @throws DateTimeParseException if the text cannot be parsed
      */
     public static Year parse(CharSequence text, DateTimeFormatter formatter) {
-        Objects.requireNonNull(formatter, "formatter");
+        Objects_requireNonNull(formatter, "formatter");
         return formatter.parse(text, Year.class);
     }
 
@@ -760,7 +761,7 @@ public final class Year
     @Override
     public long periodUntil(Temporal endYear, TemporalUnit unit) {
         if (endYear instanceof Year == false) {
-            Objects.requireNonNull(endYear, "endYear");
+            Objects_requireNonNull(endYear, "endYear");
             throw new DateTimeException("Unable to calculate period between objects of two different types");
         }
         Year end = (Year) endYear;
@@ -933,7 +934,7 @@ public final class Year
      * @throws DateTimeException if an error occurs during printing
      */
     public String toString(DateTimeFormatter formatter) {
-        Objects.requireNonNull(formatter, "formatter");
+        Objects_requireNonNull(formatter, "formatter");
         return formatter.format(this);
     }
 

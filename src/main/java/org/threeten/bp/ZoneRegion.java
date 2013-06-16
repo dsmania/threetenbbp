@@ -37,12 +37,13 @@ import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 import org.threeten.bp.zone.ZoneRules;
 import org.threeten.bp.zone.ZoneRulesException;
 import org.threeten.bp.zone.ZoneRulesProvider;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A geographical region where the same time-zone rules apply.
@@ -112,7 +113,7 @@ final class ZoneRegion extends ZoneId implements Serializable {
      * @throws DateTimeException if checking availability and the ID cannot be found
      */
     static ZoneRegion ofId(String zoneId, boolean checkAvailable) {
-        Objects.requireNonNull(zoneId, "zoneId");
+        Objects_requireNonNull(zoneId, "zoneId");
         if (zoneId.length() < 2 || zoneId.startsWith("UTC") ||
                 zoneId.startsWith("GMT") || (PATTERN.matcher(zoneId).matches() == false)) {
             throw new DateTimeException("Invalid ID for region-based ZoneId, invalid format: " + zoneId);

@@ -51,7 +51,6 @@ import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,6 +60,9 @@ import org.threeten.bp.temporal.ChronoUnit;
 import org.threeten.bp.temporal.Temporal;
 import org.threeten.bp.temporal.TemporalAmount;
 import org.threeten.bp.temporal.TemporalUnit;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Long_compare;
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A time-based amount of time, such as '34.5 seconds'.
@@ -344,7 +346,7 @@ public final class Duration
      * @throws DateTimeParseException if the text cannot be parsed to a duration
      */
     public static Duration parse(CharSequence text) {
-        Objects.requireNonNull(text, "text");
+        Objects_requireNonNull(text, "text");
         Matcher matcher = PATTERN.matcher(text);
         if (matcher.matches()) {
             // check for letter T but no time sections
@@ -580,7 +582,7 @@ public final class Duration
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Duration plus(long amountToAdd, TemporalUnit unit) {
-        Objects.requireNonNull(unit, "unit");
+        Objects_requireNonNull(unit, "unit");
         if (unit == DAYS) {
             return plus(Jdk8Methods.safeMultiply(amountToAdd, SECONDS_PER_DAY), 0);
         }
@@ -1078,7 +1080,7 @@ public final class Duration
      */
     @Override
     public int compareTo(Duration otherDuration) {
-        int cmp = Long.compare(seconds, otherDuration.seconds);
+        int cmp = Long_compare(seconds, otherDuration.seconds);
         if (cmp != 0) {
             return cmp;
         }

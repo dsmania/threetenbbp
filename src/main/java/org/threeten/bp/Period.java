@@ -40,7 +40,6 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,6 +52,8 @@ import org.threeten.bp.temporal.Temporal;
 import org.threeten.bp.temporal.TemporalAmount;
 import org.threeten.bp.temporal.TemporalUnit;
 import org.threeten.bp.temporal.ValueRange;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A date-based amount of time, such as '2 years, 3 months and 4 days'.
@@ -224,7 +225,7 @@ public final class Period
      * @throws DateTimeParseException if the text cannot be parsed to a period
      */
     public static Period parse(CharSequence text) {
-        Objects.requireNonNull(text, "text");
+        Objects_requireNonNull(text, "text");
         Matcher matcher = PATTERN.matcher(text);
         if (matcher.matches()) {
             int negate = ("-".equals(matcher.group(1)) ? -1 : 1);
@@ -707,7 +708,7 @@ public final class Period
      */
     @Override
     public Temporal addTo(Temporal temporal) {
-        Objects.requireNonNull(temporal, "temporal");
+        Objects_requireNonNull(temporal, "temporal");
         if ((years | months) != 0) {
             long monthRange = monthRange(temporal);
             if (monthRange >= 0) {
@@ -755,7 +756,7 @@ public final class Period
      */
     @Override
     public Temporal subtractFrom(Temporal temporal) {
-        Objects.requireNonNull(temporal, "temporal");
+        Objects_requireNonNull(temporal, "temporal");
         if ((years | months) != 0) {
             long monthRange = monthRange(temporal);
             if (monthRange >= 0) {

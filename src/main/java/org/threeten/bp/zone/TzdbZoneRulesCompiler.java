@@ -322,7 +322,7 @@ final class TzdbZoneRulesCompiler {
             if (jos != null) {
                 try {
                     jos.close();
-                } catch (Exception e) {
+                } catch (Exception ex) {
                     // Ignored
                 }
             }

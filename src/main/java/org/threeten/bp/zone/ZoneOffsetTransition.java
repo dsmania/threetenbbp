@@ -38,12 +38,13 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import org.threeten.bp.Duration;
 import org.threeten.bp.Instant;
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.ZoneOffset;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * A transition between two offsets caused by a discontinuity in the local time-line.
@@ -99,9 +100,9 @@ public final class ZoneOffsetTransition
      *         are equal, or {@code transition.getNano()} returns non-zero value
      */
     public static ZoneOffsetTransition of(LocalDateTime transition, ZoneOffset offsetBefore, ZoneOffset offsetAfter) {
-        Objects.requireNonNull(transition, "transition");
-        Objects.requireNonNull(offsetBefore, "offsetBefore");
-        Objects.requireNonNull(offsetAfter, "offsetAfter");
+        Objects_requireNonNull(transition, "transition");
+        Objects_requireNonNull(offsetBefore, "offsetBefore");
+        Objects_requireNonNull(offsetAfter, "offsetAfter");
         if (offsetBefore.equals(offsetAfter)) {
             throw new IllegalArgumentException("Offsets must not be equal");
         }

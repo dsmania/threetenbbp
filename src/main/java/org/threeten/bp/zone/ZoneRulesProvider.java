@@ -37,7 +37,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NavigableMap;
-import java.util.Objects;
 import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
 import java.util.Set;
@@ -48,6 +47,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import org.threeten.bp.DateTimeException;
 import org.threeten.bp.ZoneId;
 import org.threeten.bp.ZonedDateTime;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * Provider of time-zone rules to the system.
@@ -129,7 +130,7 @@ public abstract class ZoneRulesProvider {
      * @throws ZoneRulesException if the zone ID is unknown
      */
     public static ZoneRules getRules(String zoneId) {
-        Objects.requireNonNull(zoneId, "zoneId");
+        Objects_requireNonNull(zoneId, "zoneId");
         return getProvider(zoneId).provideRules(zoneId);
     }
 
@@ -158,7 +159,7 @@ public abstract class ZoneRulesProvider {
      * @throws ZoneRulesException if the zone ID is unknown
      */
     public static NavigableMap<String, ZoneRules> getVersions(String zoneId) {
-        Objects.requireNonNull(zoneId, "zoneId");
+        Objects_requireNonNull(zoneId, "zoneId");
         return getProvider(zoneId).provideVersions(zoneId);
     }
 
@@ -197,7 +198,7 @@ public abstract class ZoneRulesProvider {
      * @throws ZoneRulesException if a region is already registered
      */
     public static void registerProvider(ZoneRulesProvider provider) {
-        Objects.requireNonNull(provider, "provider");
+        Objects_requireNonNull(provider, "provider");
         registerProvider0(provider);
         PROVIDERS.add(provider);
     }
@@ -210,7 +211,7 @@ public abstract class ZoneRulesProvider {
      */
     private static void registerProvider0(ZoneRulesProvider provider) {
         for (String zoneId : provider.provideZoneIds()) {
-            Objects.requireNonNull(zoneId, "zoneId");
+            Objects_requireNonNull(zoneId, "zoneId");
             ZoneRulesProvider old = ZONES.putIfAbsent(zoneId, provider.provideBind(zoneId));
             if (old != null) {
                 throw new ZoneRulesException(

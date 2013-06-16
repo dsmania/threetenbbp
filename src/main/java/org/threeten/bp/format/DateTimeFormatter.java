@@ -50,7 +50,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import org.threeten.bp.DateTimeException;
 import org.threeten.bp.ZoneId;
@@ -62,6 +61,9 @@ import org.threeten.bp.temporal.ChronoField;
 import org.threeten.bp.temporal.IsoFields;
 import org.threeten.bp.temporal.TemporalAccessor;
 import org.threeten.bp.temporal.TemporalField;
+
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_equals;
+import static org.threeten.bp.jdk7.Jdk7Methods.Objects_requireNonNull;
 
 /**
  * Formatter for printing and parsing date-time objects.
@@ -814,7 +816,7 @@ public final class DateTimeFormatter {
      * @return the date formatter, not null
      */
     public static DateTimeFormatter ofLocalizedDate(FormatStyle dateStyle) {
-        Objects.requireNonNull(dateStyle, "dateStyle");
+        Objects_requireNonNull(dateStyle, "dateStyle");
         return new DateTimeFormatterBuilder().appendLocalized(dateStyle, null).toFormatter();
     }
 
@@ -837,7 +839,7 @@ public final class DateTimeFormatter {
      * @return the time formatter, not null
      */
     public static DateTimeFormatter ofLocalizedTime(FormatStyle timeStyle) {
-        Objects.requireNonNull(timeStyle, "timeStyle");
+        Objects_requireNonNull(timeStyle, "timeStyle");
         return new DateTimeFormatterBuilder().appendLocalized(null, timeStyle).toFormatter();
     }
 
@@ -860,7 +862,7 @@ public final class DateTimeFormatter {
      * @return the date-time formatter, not null
      */
     public static DateTimeFormatter ofLocalizedDateTime(FormatStyle dateTimeStyle) {
-        Objects.requireNonNull(dateTimeStyle, "dateTimeStyle");
+        Objects_requireNonNull(dateTimeStyle, "dateTimeStyle");
         return new DateTimeFormatterBuilder().appendLocalized(dateTimeStyle, dateTimeStyle).toFormatter();
     }
 
@@ -884,8 +886,8 @@ public final class DateTimeFormatter {
      * @return the date, time or date-time formatter, not null
      */
     public static DateTimeFormatter ofLocalizedDateTime(FormatStyle dateStyle, FormatStyle timeStyle) {
-        Objects.requireNonNull(dateStyle, "dateStyle");
-        Objects.requireNonNull(timeStyle, "timeStyle");
+        Objects_requireNonNull(dateStyle, "dateStyle");
+        Objects_requireNonNull(timeStyle, "timeStyle");
         return new DateTimeFormatterBuilder().appendLocalized(dateStyle, timeStyle).toFormatter();
     }
 
@@ -923,9 +925,9 @@ public final class DateTimeFormatter {
      */
     DateTimeFormatter(CompositePrinterParser printerParser, Locale locale,
                       DateTimeFormatSymbols symbols, Chronology chrono, ZoneId zone) {
-        this.printerParser = Objects.requireNonNull(printerParser, "printerParser");
-        this.locale = Objects.requireNonNull(locale, "locale");
-        this.symbols = Objects.requireNonNull(symbols, "symbols");
+        this.printerParser = Objects_requireNonNull(printerParser, "printerParser");
+        this.locale = Objects_requireNonNull(locale, "locale");
+        this.symbols = Objects_requireNonNull(symbols, "symbols");
         this.chrono = chrono;
         this.zone = zone;
     }
@@ -1025,7 +1027,7 @@ public final class DateTimeFormatter {
      * @return a formatter based on this formatter with the requested override chronology, not null
      */
     public DateTimeFormatter withChronology(Chronology chrono) {
-        if (Objects.equals(this.chrono, chrono)) {
+        if (Objects_equals(this.chrono, chrono)) {
             return this;
         }
         return new DateTimeFormatter(printerParser, locale, symbols, chrono, zone);
@@ -1072,7 +1074,7 @@ public final class DateTimeFormatter {
      * @return a formatter based on this formatter with the requested override zone, not null
      */
     public DateTimeFormatter withZone(ZoneId zone) {
-        if (Objects.equals(this.zone, zone)) {
+        if (Objects_equals(this.zone, zone)) {
             return this;
         }
         return new DateTimeFormatter(printerParser, locale, symbols, chrono, zone);
@@ -1111,8 +1113,8 @@ public final class DateTimeFormatter {
      * @throws DateTimeException if an error occurs during formatting
      */
     public void formatTo(TemporalAccessor temporal, Appendable appendable) {
-        Objects.requireNonNull(temporal, "temporal");
-        Objects.requireNonNull(appendable, "appendable");
+        Objects_requireNonNull(temporal, "temporal");
+        Objects_requireNonNull(appendable, "appendable");
         try {
             DateTimePrintContext context = new DateTimePrintContext(temporal, this);
             if (appendable instanceof StringBuilder) {
@@ -1145,7 +1147,7 @@ public final class DateTimeFormatter {
      * @throws DateTimeParseException if unable to parse the requested result
      */
     public TemporalAccessor parse(CharSequence text) {
-        Objects.requireNonNull(text, "text");
+        Objects_requireNonNull(text, "text");
         try {
             return parseToBuilder(text, null).resolve();
         } catch (DateTimeParseException ex) {
@@ -1186,8 +1188,8 @@ public final class DateTimeFormatter {
      * @throws IndexOutOfBoundsException if the position is invalid
      */
     public TemporalAccessor parse(CharSequence text, ParsePosition position) {
-        Objects.requireNonNull(text, "text");
-        Objects.requireNonNull(position, "position");
+        Objects_requireNonNull(text, "text");
+        Objects_requireNonNull(position, "position");
         try {
             return parseToBuilder(text, position).resolve();
         } catch (DateTimeParseException ex) {
@@ -1219,8 +1221,8 @@ public final class DateTimeFormatter {
      * @throws DateTimeParseException if unable to parse the requested result
      */
     public <T> T parse(CharSequence text, Class<T> type) {
-        Objects.requireNonNull(text, "text");
-        Objects.requireNonNull(type, "type");
+        Objects_requireNonNull(text, "text");
+        Objects_requireNonNull(type, "type");
         try {
             DateTimeBuilder builder = parseToBuilder(text, null).resolve();
             return builder.build(type);
@@ -1261,8 +1263,8 @@ public final class DateTimeFormatter {
      * @throws DateTimeParseException if unable to parse the requested result
      */
     public TemporalAccessor parseBest(CharSequence text, Class<?>... types) {
-        Objects.requireNonNull(text, "text");
-        Objects.requireNonNull(types, "types");
+        Objects_requireNonNull(text, "text");
+        Objects_requireNonNull(types, "types");
         if (types.length < 2) {
             throw new IllegalArgumentException("At least two types must be specified");
         }
@@ -1372,8 +1374,8 @@ public final class DateTimeFormatter {
     }
 
     private Parsed parseUnresolved0(CharSequence text, ParsePosition position) {
-        Objects.requireNonNull(text, "text");
-        Objects.requireNonNull(position, "position");
+        Objects_requireNonNull(text, "text");
+        Objects_requireNonNull(position, "position");
         DateTimeParseContext context = new DateTimeParseContext(this);
         int pos = position.getIndex();
         pos = printerParser.parse(context, text, pos);
@@ -1430,7 +1432,7 @@ public final class DateTimeFormatter {
      * @return this formatter as a classic format instance, not null
      */
     public Format toFormat(Class<?> parseType) {
-        Objects.requireNonNull(parseType, "parseType");
+        Objects_requireNonNull(parseType, "parseType");
         return new ClassicFormat(this, parseType);
     }
 
@@ -1465,9 +1467,9 @@ public final class DateTimeFormatter {
 
         @Override
         public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
-            Objects.requireNonNull(obj, "obj");
-            Objects.requireNonNull(toAppendTo, "toAppendTo");
-            Objects.requireNonNull(pos, "pos");
+            Objects_requireNonNull(obj, "obj");
+            Objects_requireNonNull(toAppendTo, "toAppendTo");
+            Objects_requireNonNull(pos, "pos");
             if (obj instanceof TemporalAccessor == false) {
                 throw new IllegalArgumentException("Format target must implement TemporalAccessor");
             }
@@ -1482,7 +1484,7 @@ public final class DateTimeFormatter {
         }
         @Override
         public Object parseObject(String text) throws ParseException {
-            Objects.requireNonNull(text, "text");
+            Objects_requireNonNull(text, "text");
             try {
                 if (parseType == null) {
                     return formatter.parseToBuilder(text, null).resolve();
@@ -1496,7 +1498,7 @@ public final class DateTimeFormatter {
         }
         @Override
         public Object parseObject(String text, ParsePosition pos) {
-            Objects.requireNonNull(text, "text");
+            Objects_requireNonNull(text, "text");
             Parsed unresolved;
             try {
                 unresolved = formatter.parseUnresolved0(text, pos);
