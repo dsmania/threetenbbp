@@ -170,15 +170,15 @@ public final class HijrahChronology extends Chronology implements Serializable {
     /**
      * Narrow names for eras.
      */
-    private static final HashMap<String, String[]> ERA_NARROW_NAMES = new HashMap<>();
+    private static final HashMap<String, String[]> ERA_NARROW_NAMES = new HashMap<String, String[]>();
     /**
      * Short names for eras.
      */
-    private static final HashMap<String, String[]> ERA_SHORT_NAMES = new HashMap<>();
+    private static final HashMap<String, String[]> ERA_SHORT_NAMES = new HashMap<String, String[]>();
     /**
      * Full names for eras.
      */
-    private static final HashMap<String, String[]> ERA_FULL_NAMES = new HashMap<>();
+    private static final HashMap<String, String[]> ERA_FULL_NAMES = new HashMap<String, String[]>();
     /**
      * Fallback language for the era names.
      */

@@ -117,7 +117,7 @@ public final class LocalTime
         MIDNIGHT = HOURS[0];
         NOON = HOURS[12];
         MIN = HOURS[0];
-        MAX = new LocalTime(23, 59, 59, 999_999_999);
+        MAX = new LocalTime(23, 59, 59, 999999999);
     }
 
     /**
@@ -151,11 +151,11 @@ public final class LocalTime
     /**
      * Microseconds per day.
      */
-    static final long MICROS_PER_DAY = SECONDS_PER_DAY * 1000_000L;
+    static final long MICROS_PER_DAY = SECONDS_PER_DAY * 1000000L;
     /**
      * Nanos per second.
      */
-    static final long NANOS_PER_SECOND = 1000_000_000L;
+    static final long NANOS_PER_SECOND = 1000000000L;
     /**
      * Nanos per minute.
      */
@@ -606,8 +606,8 @@ public final class LocalTime
             case NANO_OF_DAY: throw new DateTimeException("Field too large for an int: " + field);
             case MICRO_OF_SECOND: return nano / 1000;
             case MICRO_OF_DAY: throw new DateTimeException("Field too large for an int: " + field);
-            case MILLI_OF_SECOND: return nano / 1000_000;
-            case MILLI_OF_DAY: return (int) (toNanoOfDay() / 1000_000);
+            case MILLI_OF_SECOND: return nano / 1000000;
+            case MILLI_OF_DAY: return (int) (toNanoOfDay() / 1000000);
             case SECOND_OF_MINUTE: return second;
             case SECOND_OF_DAY: return toSecondOfDay();
             case MINUTE_OF_HOUR: return minute;
@@ -780,8 +780,8 @@ public final class LocalTime
                 case NANO_OF_DAY: return LocalTime.ofNanoOfDay(newValue);
                 case MICRO_OF_SECOND: return withNano((int) newValue * 1000);
                 case MICRO_OF_DAY: return plusNanos((newValue - toNanoOfDay() / 1000) * 1000);
-                case MILLI_OF_SECOND: return withNano((int) newValue * 1000_000);
-                case MILLI_OF_DAY: return plusNanos((newValue - toNanoOfDay() / 1000_000) * 1000_000);
+                case MILLI_OF_SECOND: return withNano((int) newValue * 1000000);
+                case MILLI_OF_DAY: return plusNanos((newValue - toNanoOfDay() / 1000000) * 1000000);
                 case SECOND_OF_MINUTE: return withSecond((int) newValue);
                 case SECOND_OF_DAY: return plusSeconds(newValue - toSecondOfDay());
                 case MINUTE_OF_HOUR: return withMinute((int) newValue);
@@ -946,7 +946,7 @@ public final class LocalTime
             switch (f) {
                 case NANOS: return plusNanos(amountToAdd);
                 case MICROS: return plusNanos((amountToAdd % MICROS_PER_DAY) * 1000);
-                case MILLIS: return plusNanos((amountToAdd % MILLIS_PER_DAY) * 1000_000);
+                case MILLIS: return plusNanos((amountToAdd % MILLIS_PER_DAY) * 1000000);
                 case SECONDS: return plusSeconds(amountToAdd);
                 case MINUTES: return plusMinutes(amountToAdd);
                 case HOURS: return plusHours(amountToAdd);
@@ -1279,7 +1279,7 @@ public final class LocalTime
             switch ((ChronoUnit) unit) {
                 case NANOS: return nanosUntil;
                 case MICROS: return nanosUntil / 1000;
-                case MILLIS: return nanosUntil / 1000_000;
+                case MILLIS: return nanosUntil / 1000000;
                 case SECONDS: return nanosUntil / NANOS_PER_SECOND;
                 case MINUTES: return nanosUntil / NANOS_PER_MINUTE;
                 case HOURS: return nanosUntil / NANOS_PER_HOUR;
@@ -1464,12 +1464,12 @@ public final class LocalTime
             buf.append(secondValue < 10 ? ":0" : ":").append(secondValue);
             if (nanoValue > 0) {
                 buf.append('.');
-                if (nanoValue % 1000_000 == 0) {
-                    buf.append(Integer.toString((nanoValue / 1000_000) + 1000).substring(1));
+                if (nanoValue % 1000000 == 0) {
+                    buf.append(Integer.toString((nanoValue / 1000000) + 1000).substring(1));
                 } else if (nanoValue % 1000 == 0) {
-                    buf.append(Integer.toString((nanoValue / 1000) + 1000_000).substring(1));
+                    buf.append(Integer.toString((nanoValue / 1000) + 1000000).substring(1));
                 } else {
-                    buf.append(Integer.toString((nanoValue) + 1000_000_000).substring(1));
+                    buf.append(Integer.toString((nanoValue) + 1000000000).substring(1));
                 }
             }
         }

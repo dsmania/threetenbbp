@@ -87,7 +87,7 @@ final class DateTimeParseContext {
     /**
      * The list of parsed data.
      */
-    private final ArrayList<Parsed> parsed = new ArrayList<>();
+    private final ArrayList<Parsed> parsed = new ArrayList<Parsed>();
 
     /**
      * Creates a new instance of the context.
@@ -382,7 +382,7 @@ final class DateTimeParseContext {
     final class Parsed extends DefaultInterfaceTemporalAccessor {
         Chronology chrono = null;
         ZoneId zone = null;
-        final Map<TemporalField, Long> fieldValues = new HashMap<>();
+        final Map<TemporalField, Long> fieldValues = new HashMap<TemporalField, Long>();
         private Parsed() {
         }
         protected Parsed copy() {

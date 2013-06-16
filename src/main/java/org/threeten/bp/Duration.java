@@ -103,7 +103,7 @@ public final class Duration
     /**
      * Constant for nanos per second.
      */
-    private static final int NANOS_PER_SECOND = 1000_000_000;
+    private static final int NANOS_PER_SECOND = 1000000000;
     /**
      * Constant for nanos per second.
      */
@@ -226,7 +226,7 @@ public final class Duration
             mos += 1000;
             secs--;
         }
-        return create(secs, mos * 1000_000);
+        return create(secs, mos * 1000000);
     }
 
     /**
@@ -380,7 +380,9 @@ public final class Duration
         try {
             long val = Long.parseLong(parsed);
             return Jdk8Methods.safeMultiply(val, multiplier);
-        } catch (NumberFormatException | ArithmeticException ex) {
+        } catch (NumberFormatException ex) {
+            throw (DateTimeParseException) new DateTimeParseException("Text cannot be parsed to a Duration: " + errorText, text, 0).initCause(ex);
+        } catch (ArithmeticException ex) {
             throw (DateTimeParseException) new DateTimeParseException("Text cannot be parsed to a Duration: " + errorText, text, 0).initCause(ex);
         }
     }
@@ -393,7 +395,9 @@ public final class Duration
         try {
             parsed = (parsed + "000000000").substring(0, 9);
             return Integer.parseInt(parsed) * negate;
-        } catch (NumberFormatException | ArithmeticException ex) {
+        } catch (NumberFormatException ex) {
+            throw (DateTimeParseException) new DateTimeParseException("Text cannot be parsed to a Duration: fraction", text, 0).initCause(ex);
+        } catch (ArithmeticException ex) {
             throw (DateTimeParseException) new DateTimeParseException("Text cannot be parsed to a Duration: fraction", text, 0).initCause(ex);
         }
     }
@@ -589,7 +593,7 @@ public final class Duration
         if (unit instanceof ChronoUnit) {
             switch ((ChronoUnit) unit) {
                 case NANOS: return plusNanos(amountToAdd);
-                case MICROS: return plusSeconds((amountToAdd / (1000_000L * 1000)) * 1000).plusNanos((amountToAdd % (1000_000L * 1000)) * 1000);
+                case MICROS: return plusSeconds((amountToAdd / (1000000L * 1000)) * 1000).plusNanos((amountToAdd % (1000000L * 1000)) * 1000);
                 case MILLIS: return plusMillis(amountToAdd);
                 case SECONDS: return plusSeconds(amountToAdd);
             }
@@ -662,7 +666,7 @@ public final class Duration
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Duration plusMillis(long millisToAdd) {
-        return plus(millisToAdd / 1000, (millisToAdd % 1000) * 1000_000);
+        return plus(millisToAdd / 1000, (millisToAdd % 1000) * 1000000);
     }
 
     /**
@@ -1043,7 +1047,7 @@ public final class Duration
      */
     public long toMillis() {
         long millis = Jdk8Methods.safeMultiply(seconds, 1000);
-        millis = Jdk8Methods.safeAdd(millis, nanos / 1000_000);
+        millis = Jdk8Methods.safeAdd(millis, nanos / 1000000);
         return millis;
     }
 
@@ -1057,7 +1061,7 @@ public final class Duration
      * @throws ArithmeticException if numeric overflow occurs
      */
     public long toNanos() {
-        long millis = Jdk8Methods.safeMultiply(seconds, 1000_000_000);
+        long millis = Jdk8Methods.safeMultiply(seconds, 1000000000);
         millis = Jdk8Methods.safeAdd(millis, nanos);
         return millis;
     }

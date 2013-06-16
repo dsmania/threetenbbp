@@ -243,9 +243,9 @@ public abstract class Clock {
             throw new IllegalArgumentException("Tick duration must not be negative");
         }
         long tickNanos = tickDuration.toNanos();
-        if (tickNanos % 1000_000 == 0) {
+        if (tickNanos % 1000000 == 0) {
             // ok, no fraction of millisecond
-        } else if (1000_000_000 % tickNanos == 0) {
+        } else if (1000000000 % tickNanos == 0) {
             // ok, divides into one second without remainder
         } else {
             throw new IllegalArgumentException("Invalid tick duration");
@@ -568,13 +568,13 @@ public abstract class Clock {
         @Override
         public long millis() {
             long millis = baseClock.millis();
-            return millis - Jdk8Methods.floorMod(millis, tickNanos / 1000_000L);
+            return millis - Jdk8Methods.floorMod(millis, tickNanos / 1000000L);
         }
         @Override
         public Instant instant() {
-            if ((tickNanos % 1000_000) == 0) {
+            if ((tickNanos % 1000000) == 0) {
                 long millis = baseClock.millis();
-                return Instant.ofEpochMilli(millis - Jdk8Methods.floorMod(millis, tickNanos / 1000_000L));
+                return Instant.ofEpochMilli(millis - Jdk8Methods.floorMod(millis, tickNanos / 1000000L));
             }
             Instant instant = baseClock.instant();
             long nanos = instant.getNano();

@@ -190,7 +190,7 @@ public final class Instant
      * The value is also chosen such that the value of the year fits in
      * an {@code int}.
      */
-    public static final Instant MAX = Instant.ofEpochSecond(MAX_SECOND, 999_999_999);
+    public static final Instant MAX = Instant.ofEpochSecond(MAX_SECOND, 999999999);
 
     /**
      * Serialization version.
@@ -199,7 +199,7 @@ public final class Instant
     /**
      * Constant for nanos per second.
      */
-    private static final int NANOS_PER_SECOND = 1000_000_000;
+    private static final int NANOS_PER_SECOND = 1000000000;
 
     /**
      * The number of seconds from the epoch of 1970-01-01T00:00:00Z.
@@ -269,7 +269,7 @@ public final class Instant
      * <pre>
      *  Instant.ofSeconds(3, 1);
      *  Instant.ofSeconds(4, -999_999_999);
-     *  Instant.ofSeconds(2, 1000_000_001);
+     *  Instant.ofSeconds(2, 1000000001);
      * </pre>
      *
      * @param epochSecond  the number of seconds from 1970-01-01T00:00:00Z
@@ -297,7 +297,7 @@ public final class Instant
     public static Instant ofEpochMilli(long epochMilli) {
         long secs = Jdk8Methods.floorDiv(epochMilli, 1000);
         int mos = Jdk8Methods.floorMod(epochMilli, 1000);
-        return create(secs, mos * 1000_000);
+        return create(secs, mos * 1000000);
     }
 
     //-----------------------------------------------------------------------
@@ -461,7 +461,7 @@ public final class Instant
             switch ((ChronoField) field) {
                 case NANO_OF_SECOND: return nanos;
                 case MICRO_OF_SECOND: return nanos / 1000;
-                case MILLI_OF_SECOND: return nanos / 1000_000;
+                case MILLI_OF_SECOND: return nanos / 1000000;
                 case INSTANT_SECONDS: INSTANT_SECONDS.checkValidIntValue(seconds);
             }
             throw new DateTimeException("Unsupported field: " + field.getName());
@@ -497,7 +497,7 @@ public final class Instant
             switch ((ChronoField) field) {
                 case NANO_OF_SECOND: return nanos;
                 case MICRO_OF_SECOND: return nanos / 1000;
-                case MILLI_OF_SECOND: return nanos / 1000_000;
+                case MILLI_OF_SECOND: return nanos / 1000000;
                 case INSTANT_SECONDS: return seconds;
             }
             throw new DateTimeException("Unsupported field: " + field.getName());
@@ -606,7 +606,7 @@ public final class Instant
             f.checkValidValue(newValue);
             switch (f) {
                 case MILLI_OF_SECOND: {
-                    int nval = (int) newValue * 1000_000;
+                    int nval = (int) newValue * 1000000;
                     return (nval != nanos ? create(seconds, nval) : this);
                 }
                 case MICRO_OF_SECOND: {
@@ -681,7 +681,7 @@ public final class Instant
         if (unit instanceof ChronoUnit) {
             switch ((ChronoUnit) unit) {
                 case NANOS: return plusNanos(amountToAdd);
-                case MICROS: return plus(amountToAdd / 1000_000, (amountToAdd % 1000_000) * 1000);
+                case MICROS: return plus(amountToAdd / 1000000, (amountToAdd % 1000000) * 1000);
                 case MILLIS: return plusMillis(amountToAdd);
                 case SECONDS: return plusSeconds(amountToAdd);
                 case MINUTES: return plusSeconds(Jdk8Methods.safeMultiply(amountToAdd, SECONDS_PER_MINUTE));
@@ -720,7 +720,7 @@ public final class Instant
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Instant plusMillis(long millisToAdd) {
-        return plus(millisToAdd / 1000, (millisToAdd % 1000) * 1000_000);
+        return plus(millisToAdd / 1000, (millisToAdd % 1000) * 1000000);
     }
 
     /**
@@ -1022,7 +1022,7 @@ public final class Instant
      */
     public long toEpochMilli() {
         long millis = Jdk8Methods.safeMultiply(seconds, 1000);
-        return millis + nanos / 1000_000;
+        return millis + nanos / 1000000;
     }
 
     //-----------------------------------------------------------------------

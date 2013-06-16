@@ -266,7 +266,7 @@ public final class IsoFields {
                 int qoy = temporal.get(QUARTER_OF_YEAR);
                 range().checkValidValue(value, this);  // leniently check from 1 to 92 TODO: check
                 LocalDate date = LocalDate.of(y, ((qoy - 1) * 3) + 1, 1).plusDays(value - 1);
-                Map<TemporalField, Long> result = new HashMap<>(4, 1.0f);
+                Map<TemporalField, Long> result = new HashMap<TemporalField, Long>(4, 1.0f);
                 result.put(EPOCH_DAY, date.toEpochDay());
                 result.put(YEAR, null);
                 result.put(QUARTER_OF_YEAR, null);
@@ -362,7 +362,7 @@ public final class IsoFields {
                 int dow = temporal.get(DAY_OF_WEEK);
                 range().checkValidValue(value, this);  // lenient range
                 LocalDate date = LocalDate.of(wby, 1, 4).plusWeeks(value - 1).with(DAY_OF_WEEK, dow);
-                Map<TemporalField, Long> result = new HashMap<>(2, 1.0f);
+                Map<TemporalField, Long> result = new HashMap<TemporalField, Long>(2, 1.0f);
                 result.put(EPOCH_DAY, date.toEpochDay());
                 result.put(WEEK_BASED_YEAR, null);
                 result.put(DAY_OF_WEEK, null);

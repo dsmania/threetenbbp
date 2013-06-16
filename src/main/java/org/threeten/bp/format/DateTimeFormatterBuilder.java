@@ -126,7 +126,7 @@ public final class DateTimeFormatterBuilder {
     /**
      * The list of printers that will be used.
      */
-    private final List<DateTimePrinterParser> printerParsers = new ArrayList<>();
+    private final List<DateTimePrinterParser> printerParsers = new ArrayList<DateTimePrinterParser>();
     /**
      * Whether this builder produces an optional formatter.
      */
@@ -562,7 +562,7 @@ public final class DateTimeFormatterBuilder {
     public DateTimeFormatterBuilder appendText(TemporalField field, Map<Long, String> textLookup) {
         Objects.requireNonNull(field, "field");
         Objects.requireNonNull(textLookup, "textLookup");
-        Map<Long, String> copy = new LinkedHashMap<>(textLookup);
+        Map<Long, String> copy = new LinkedHashMap<Long, String>(textLookup);
         Map<TextStyle, Map<Long, String>> map = Collections.singletonMap(TextStyle.FULL, copy);
         final LocaleStore store = new LocaleStore(map);
         DateTimeTextProvider provider = new DateTimeTextProvider() {
@@ -1259,7 +1259,7 @@ public final class DateTimeFormatterBuilder {
     }
 
     /** Map of letters to fields. */
-    private static final Map<Character, TemporalField> FIELD_MAP = new HashMap<>();
+    private static final Map<Character, TemporalField> FIELD_MAP = new HashMap<Character, TemporalField>();
     static {
         FIELD_MAP.put('G', ChronoField.ERA);                       // Java, CLDR (different to both for 1/2 chars)
         FIELD_MAP.put('y', ChronoField.YEAR);                      // CLDR
@@ -2467,7 +2467,7 @@ public final class DateTimeFormatterBuilder {
                 int pos = buf.length();
                 buf.append(ldt).append('Z');
                 if (hi < 0) {
-                    if (ldt.getYear() == -10_000) {
+                    if (ldt.getYear() == -10000) {
                         buf.replace(pos, pos + 2, Long.toString(hi - 1));
                     } else if (lo == 0) {
                         buf.insert(pos, hi);
@@ -2498,12 +2498,12 @@ public final class DateTimeFormatterBuilder {
             Long nanoVal = newContext.getParsed(NANO_OF_SECOND);
             int sec = (secVal != null ? secVal.intValue() : 0);
             int nano = (nanoVal != null ? nanoVal.intValue() : 0);
-            int year = (int) yearParsed % 10_000;
+            int year = (int) yearParsed % 10000;
             long instantSecs;
             try {
                 LocalDateTime ldt = LocalDateTime.of(year, month, day, hour, min, sec, 0);
                 instantSecs = ldt.toEpochSecond(ZoneOffset.UTC);
-                instantSecs += Jdk8Methods.safeMultiply(yearParsed / 10_000L, SECONDS_PER_10000_YEARS);
+                instantSecs += Jdk8Methods.safeMultiply(yearParsed / 10000L, SECONDS_PER_10000_YEARS);
             } catch (RuntimeException ex) {
                 return ~position;
             }
@@ -2791,7 +2791,7 @@ public final class DateTimeFormatterBuilder {
                 synchronized (this) {
                     cached = cachedSubstringTree;
                     if (cached == null || cached.getKey() != regionIdsSize) {
-                        cachedSubstringTree = cached = new SimpleImmutableEntry<>(regionIdsSize, prepareParser(regionIds));
+                        cachedSubstringTree = cached = new SimpleImmutableEntry<Integer, SubstringTree>(regionIdsSize, prepareParser(regionIds));
                     }
                 }
             }
@@ -2863,7 +2863,7 @@ public final class DateTimeFormatterBuilder {
             /**
              * Map of a substring to a set of substrings that contain the key.
              */
-            private final Map<CharSequence, SubstringTree> substringMap = new HashMap<>();
+            private final Map<CharSequence, SubstringTree> substringMap = new HashMap<CharSequence, SubstringTree>();
 
             /**
              * Constructor.
@@ -2908,7 +2908,7 @@ public final class DateTimeFormatterBuilder {
          */
         private static SubstringTree prepareParser(Set<String> availableIDs) {
             // sort by length
-            List<String> ids = new ArrayList<>(availableIDs);
+            List<String> ids = new ArrayList<String>(availableIDs);
             Collections.sort(ids, LENGTH_SORT);
 
             // build the tree

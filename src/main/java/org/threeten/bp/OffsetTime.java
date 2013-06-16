@@ -1060,7 +1060,7 @@ public final class OffsetTime
             switch ((ChronoUnit) unit) {
                 case NANOS: return nanosUntil;
                 case MICROS: return nanosUntil / 1000;
-                case MILLIS: return nanosUntil / 1000_000;
+                case MILLIS: return nanosUntil / 1000000;
                 case SECONDS: return nanosUntil / NANOS_PER_SECOND;
                 case MINUTES: return nanosUntil / NANOS_PER_MINUTE;
                 case HOURS: return nanosUntil / NANOS_PER_HOUR;

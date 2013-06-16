@@ -98,11 +98,11 @@ public final class Year
     /**
      * The minimum supported year, '-999,999,999'.
      */
-    public static final int MIN_VALUE = -999_999_999;
+    public static final int MIN_VALUE = -999999999;
     /**
      * The maximum supported year, '+999,999,999'.
      */
-    public static final int MAX_VALUE = 999_999_999;
+    public static final int MAX_VALUE = 999999999;
 
     /**
      * Serialization version.

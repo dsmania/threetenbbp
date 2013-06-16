@@ -128,7 +128,7 @@ public final class WeekFields implements Serializable {
      * The cache of rules by firstDayOfWeek plus minimalDays.
      * Initialized first to be available for definition of ISO, etc.
      */
-    private static final ConcurrentMap<String, WeekFields> CACHE = new ConcurrentHashMap<>(4, 0.75f, 2);
+    private static final ConcurrentMap<String, WeekFields> CACHE = new ConcurrentHashMap<String, WeekFields>(4, 0.75f, 2);
 
     /**
      * The ISO-8601 definition, where a week starts on Monday and the first week
@@ -566,7 +566,7 @@ public final class WeekFields implements Serializable {
                 long weeks = newValue - localizedWeekOfMonth(date, dateDow);
                 int days = dow - dateDow;
                 date = date.plus(weeks * 7 + days, DAYS);
-                Map<TemporalField, Long> result = new HashMap<>(4, 1.0f);
+                Map<TemporalField, Long> result = new HashMap<TemporalField, Long>(4, 1.0f);
                 result.put(EPOCH_DAY, date.toEpochDay());
                 result.put(YEAR, null);
                 result.put(MONTH_OF_YEAR, null);
@@ -578,7 +578,7 @@ public final class WeekFields implements Serializable {
                 long weeks = newValue - localizedWeekOfYear(date, dateDow);
                 int days = dow - dateDow;
                 date = date.plus(weeks * 7 + days, DAYS);
-                Map<TemporalField, Long> result = new HashMap<>(4, 1.0f);
+                Map<TemporalField, Long> result = new HashMap<TemporalField, Long>(4, 1.0f);
                 result.put(EPOCH_DAY, date.toEpochDay());
                 result.put(YEAR, null);
                 result.put(DAY_OF_WEEK, null);

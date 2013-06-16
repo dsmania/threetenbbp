@@ -335,13 +335,13 @@ final class DateTimeBuilder
 //        }
         if (standardFields.containsKey(NANO_OF_DAY)) {
             long nod = standardFields.remove(NANO_OF_DAY);
-            addFieldValue(SECOND_OF_DAY, nod / 1000_000_000L);
-            addFieldValue(NANO_OF_SECOND, nod % 1000_000_000L);
+            addFieldValue(SECOND_OF_DAY, nod / 1000000000L);
+            addFieldValue(NANO_OF_SECOND, nod % 1000000000L);
         }
         if (standardFields.containsKey(MICRO_OF_DAY)) {
             long cod = standardFields.remove(MICRO_OF_DAY);
-            addFieldValue(SECOND_OF_DAY, cod / 1000_000L);
-            addFieldValue(MICRO_OF_SECOND, cod % 1000_000L);
+            addFieldValue(SECOND_OF_DAY, cod / 1000000L);
+            addFieldValue(MICRO_OF_SECOND, cod % 1000000L);
         }
         if (standardFields.containsKey(MILLI_OF_DAY)) {
             long lod = standardFields.remove(MILLI_OF_DAY);
@@ -490,7 +490,7 @@ final class DateTimeBuilder
     public String toString() {
         StringBuilder buf = new StringBuilder(128);
         buf.append("DateTimeBuilder[");
-        Map<TemporalField, Long> fields = new HashMap<>();
+        Map<TemporalField, Long> fields = new HashMap<TemporalField, Long>();
         fields.putAll(standardFields);
         if (otherFields != null) {
             fields.putAll(otherFields);

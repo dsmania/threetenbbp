@@ -192,7 +192,7 @@ public abstract class ZoneId implements Serializable {
      */
     public static final Map<String, String> OLD_IDS_POST_2005;
     static {
-        Map<String, String> base = new HashMap<>();
+        Map<String, String> base = new HashMap<String, String>();
         base.put("ACT", "Australia/Darwin");
         base.put("AET", "Australia/Sydney");
         base.put("AGT", "America/Argentina/Buenos_Aires");
@@ -218,12 +218,12 @@ public abstract class ZoneId implements Serializable {
         base.put("PST", "America/Los_Angeles");
         base.put("SST", "Pacific/Guadalcanal");
         base.put("VST", "Asia/Ho_Chi_Minh");
-        Map<String, String> pre = new HashMap<>(base);
+        Map<String, String> pre = new HashMap<String, String>(base);
         pre.put("EST", "America/New_York");
         pre.put("MST", "America/Denver");
         pre.put("HST", "Pacific/Honolulu");
         OLD_IDS_PRE_2005 = Collections.unmodifiableMap(pre);
-        Map<String, String> post = new HashMap<>(base);
+        Map<String, String> post = new HashMap<String, String>(base);
         post.put("EST", "-05:00");
         post.put("MST", "-07:00");
         post.put("HST", "-10:00");

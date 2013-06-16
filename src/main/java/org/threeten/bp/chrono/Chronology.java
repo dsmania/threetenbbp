@@ -142,8 +142,8 @@ public abstract class Chronology implements Comparable<Chronology> {
     private static final ConcurrentHashMap<String, Chronology> CHRONOS_BY_TYPE;
     static {
         // TODO: defer initialization?
-        ConcurrentHashMap<String, Chronology> ids = new ConcurrentHashMap<>();
-        ConcurrentHashMap<String, Chronology> types = new ConcurrentHashMap<>();
+        ConcurrentHashMap<String, Chronology> ids = new ConcurrentHashMap<String, Chronology>();
+        ConcurrentHashMap<String, Chronology> types = new ConcurrentHashMap<String, Chronology>();
         ServiceLoader<Chronology> loader =  ServiceLoader.load(Chronology.class);
         for (Chronology chrono : loader) {
             ids.putIfAbsent(chrono.getId(), chrono);
@@ -274,7 +274,7 @@ public abstract class Chronology implements Comparable<Chronology> {
      * @return the independent, modifiable set of the available chronology IDs, not null
      */
     public static Set<Chronology> getAvailableChronologies() {
-        return new HashSet<>(CHRONOS_BY_ID.values());
+        return new HashSet<Chronology>(CHRONOS_BY_ID.values());
     }
 
     //-----------------------------------------------------------------------
