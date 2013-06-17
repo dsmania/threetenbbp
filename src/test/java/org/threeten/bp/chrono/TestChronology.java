@@ -149,11 +149,31 @@ public class TestChronology {
         assertEquals(chrono.getCalendarType(), calendarType);
     }
 
-    @Test(dataProvider = "calendarsystemtype")
-    public void test_lookupLocale(Chronology chrono, String calendarType) {
-        // BBP: Calendar type is not present in JDK 6 Locale
+//    @Test(dataProvider = "calendarsystemtype")
+//    public void test_lookupLocale(Chronology chrono, String calendarType) {
 //        Locale locale = new Locale.Builder().setLanguage("en").setRegion("CA").setUnicodeLocaleKeyword("ca", calendarType).build();
-        Locale locale = new Locale("en", "CA");
+//        assertEquals(Chronology.ofLocale(locale), chrono);
+//    }
+
+    /* BBP: Calendar type is not present in JDK 6 Locale. In JSR-310, when no calendar information is provided, ISO
+     * chronology is always returned except for Japanese. */
+
+    @DataProvider(name = "localecalendarsystemtype")
+    Object[][] data_LocaleCalendarType() {
+        return new Object[][] {
+            {IsoChronology.INSTANCE, new Locale("ar", "SA")},
+            {IsoChronology.INSTANCE, new Locale("en", "CA")},
+            {IsoChronology.INSTANCE, new Locale("ja", "JP")},
+            {JapaneseChronology.INSTANCE, new Locale("ja", "JP", "JP")},
+            {IsoChronology.INSTANCE, new Locale("zh", "CN")},
+            {IsoChronology.INSTANCE, new Locale("zh", "TW")},
+            {IsoChronology.INSTANCE, new Locale("th", "TH")},
+            {IsoChronology.INSTANCE, new Locale("th", "TH", "TH")},
+        };
+    }
+
+    @Test(dataProvider = "localecalendarsystemtype")
+    public void test_lookupLocale(Chronology chrono, Locale locale) {
         assertEquals(Chronology.ofLocale(locale), chrono);
     }
 

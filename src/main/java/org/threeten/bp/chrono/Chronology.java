@@ -234,9 +234,9 @@ public abstract class Chronology implements Comparable<Chronology> {
 //            return chrono;
 //        }
 
-        // BBP: In JDK 6 there's no calendar information in the Locale object, thus, honoring the definition, the thai
-        // buddhist chronology is never returned and the japanese one when the locale is japanese
-        return (Locale.JAPANESE.equals(locale)) ? JapaneseChronology.INSTANCE : IsoChronology.INSTANCE;
+        // BBP: In JDK 6 there's no calendar information in the Locale object, thus, honoring the definition, only the
+        // ja_JP_JP locale will return the proper chronology as it is defined so
+        return (new Locale("ja", "JP", "JP").equals(locale)) ? JapaneseChronology.INSTANCE : IsoChronology.INSTANCE;
     }
 
     //-----------------------------------------------------------------------
