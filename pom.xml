@@ -35,6 +35,19 @@
       <timezone>0</timezone>
     </developer>
   </developers>
+  <contributors>
+    <contributor>
+      <name>Yago Méndez Vidal</name>
+      <email>yago.mendez.vidal@gmail.com</email>
+      <url>http://dsmania.kilois.org/</url>
+      <organization>Kilois</organization>
+      <organizationUrl>http://www.kilois.org/</organizationUrl>
+      <roles>
+        <role>Back-backporter</role>
+      </roles>
+      <timezone>+1</timezone>
+    </contributor>
+  </contributors>
   <licenses>
     <license>
       <name>BSD 3-clause</name>
