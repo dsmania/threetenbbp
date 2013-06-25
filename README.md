@@ -33,35 +33,38 @@ Please, pay attention to the documentation of the method [Chronology.ofLocale(Lo
 Anyway, any code implemented with this back-backport should work exactly the same once ported forward to JDK 1.7 or doing the same changes as in 1.7 to 1.8, just there are some missing features in the Locale.
 
 #### Distribution
-If you want to use ThreeTen back-backport in your projects, a distribution is added in this repository under the directory "repo".
+If you want to use ThreeTen back-backport in your projects, a distribution is added in this repository under the directory `repo`.
 
 You can choose to use the jars directly or using maven. Since this is not in maven central the workaround would be using a project local repository:
-1. Copy the repo directory of this project to yours.
 
-2. Include a project local repository in your pom.xml:
-  <repositories>
-    ...
-    <repository>
-      <name>Project local repository</name>
-      <id>project.repo</id>
-      <url>file:${project.basedir}/repos</url>
-    </repository>
-    ...
-  </repositories>
+1. Copy the `repo` directory of this project to yours.
 
+2. Include a project local repository in your `pom.xml`:
+```
+    <repositories>
+      ...
+      <repository>
+        <name>Project local repository</name>
+        <id>project.repo</id>
+        <url>file:${project.basedir}/repos</url>
+      </repository>
+      ...
+    </repositories>
+```
 3. Add the dependency:
-  <dependencies>
-    ...
-    <dependency>
-      <groupId>org.threeten</groupId>
-      <artifactId>threetenbp</artifactId>
-      <version>0.8.1-jdk6</version>
-      <scope>test</scope>
-    </dependency>
-    ...
-  </dependencies>
-
-Be careful when using a pom type project on modules, as the local repository is defined under referencing the project.basedir variable. If you're willing to use it so, make it dependent on a custom variable and redefine it in every module (you can read further [here](stackoverflow.com/questions/1012402/maven2-property-that-indicates-the-parent-directory/)).
+```
+    <dependencies>
+      ...
+      <dependency>
+        <groupId>org.threeten</groupId>
+        <artifactId>threetenbp</artifactId>
+        <version>0.8.1-jdk6</version>
+        <scope>test</scope>
+      </dependency>
+      ...
+    </dependencies>
+```
+Be careful when using a pom type project on modules, as the local repository is defined under referencing the project.basedir variable. If you're willing to use it so, make it dependent on a custom variable and redefine it in every module (you can read further [here](http://stackoverflow.com/questions/1012402/maven2-property-that-indicates-the-parent-directory/)).
 
 #### FAQs
 
@@ -79,4 +82,4 @@ Thus, this project is a fork of the original code before entry to OpenJDK.
 
 4. What's the purpose on doing a back-backport?
 Stephen Colebourne has done an impressive job with either Joda Time or the JSR-310. While existing Joda Time, some people have chosen to use the first implementations of the JSR-310 being the v0.6.3 the most used in long time. The original had a small problem when used in some environments and that was it overrode some classes from the standard API (as it's supposed to do any JSR if needed). The Backport had not that issue and this back-backport is an option to upgrade some projects still running in JDK 1.6.
-Personally, this is a share of something I neeeded, since I've been using the JSR-310 v.0.6.3 for about 5 years now.
+Personally, this is a share of something I needed, since I've been using the JSR-310 v.0.6.3 for about 5 years now.
