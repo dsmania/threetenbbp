@@ -1,3 +1,6 @@
+##### This project covered the v0.8.1 of the ThreeTen Backport. Since later releases, JDK 6 is also covered in the official backport so this project has become obsolete. I hope this has been somehow useful.
+##### ThreeTen Backport: https://github.com/ThreeTen/threetenbp
+
 ## ThreeTen back-backport project
 JSR-310 provides a new date and time library for JDK 1.8.
 This project is the backport to JDK 1.6 based on the official backport to JDK 1.7.
